@@ -10,7 +10,7 @@ export default function MenuContent({pageDict, currentPage, setCurrentPage}) {
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: "space-between" }}>
       <List dense>
-        {pageDict.map((item, index) => (
+        {Object.values(pageDict).map((item, index) => (
           <ListItem
             key={index}
             disablePadding
@@ -29,7 +29,7 @@ export default function MenuContent({pageDict, currentPage, setCurrentPage}) {
 }
 
 MenuContent.propTypes = {
-  pageDict: PropTypes.array,
+  pageDict: PropTypes.object,
   currentPage: PropTypes.string,
   setCurrentPage: PropTypes.func
 }

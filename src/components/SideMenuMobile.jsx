@@ -12,7 +12,7 @@ import MenuButton from './MenuButton';
 import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 
-function SideMenuMobile({ open, toggleDrawer }) {
+function SideMenuMobile({ open, toggleDrawer , pageDict, currentPage, setCurrentPage}) {
   return (
     <Drawer
       anchor="right"
@@ -21,21 +21,21 @@ function SideMenuMobile({ open, toggleDrawer }) {
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         [`& .${drawerClasses.paper}`]: {
-          backgroundImage: 'none',
-          backgroundColor: 'background.paper',
+          backgroundImage: "none",
+          backgroundColor: "background.paper",
         },
       }}
     >
       <Stack
         sx={{
-          maxWidth: '70dvw',
-          height: '100%',
+          maxWidth: "70dvw",
+          height: "100%",
         }}
       >
         <Stack direction="row" sx={{ p: 2, pb: 0, gap: 1 }}>
           <Stack
             direction="row"
-            sx={{ gap: 1, alignItems: 'center', flexGrow: 1, p: 1 }}
+            sx={{ gap: 1, alignItems: "center", flexGrow: 1, p: 1 }}
           >
             <Avatar
               sizes="small"
@@ -53,12 +53,20 @@ function SideMenuMobile({ open, toggleDrawer }) {
         </Stack>
         <Divider />
         <Stack sx={{ flexGrow: 1 }}>
-          <MenuContent />
+          <MenuContent
+            pageDict={pageDict}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
           <Divider />
         </Stack>
         <CardAlert />
         <Stack sx={{ p: 2 }}>
-          <Button variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
+          <Button
+            variant="outlined"
+            fullWidth
+            startIcon={<LogoutRoundedIcon />}
+          >
             Logout
           </Button>
         </Stack>
@@ -70,6 +78,9 @@ function SideMenuMobile({ open, toggleDrawer }) {
 SideMenuMobile.propTypes = {
   open: PropTypes.bool,
   toggleDrawer: PropTypes.func.isRequired,
+  pageDict: PropTypes.object,
+  currentPage: PropTypes.string,
+  setCurrentPage: PropTypes.func,
 };
 
 export default SideMenuMobile;

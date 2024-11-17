@@ -11,6 +11,8 @@ import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import SideMenuMobile from "./SideMenuMobile";
 import MenuButton from "./MenuButton";
 import ColorModeIconDropdown from "../shared-theme/ColorModeIconDropdown";
+import PropTypes from "prop-types";
+
 const Toolbar = styled(MuiToolbar)({
   width: "100%",
   padding: "12px",
@@ -27,7 +29,7 @@ const Toolbar = styled(MuiToolbar)({
   },
 });
 
-export default function AppNavbar() {
+export default function AppNavbar({pageDict, currentPage, setCurrentPage}) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -60,22 +62,28 @@ export default function AppNavbar() {
           <Stack
             direction="row"
             spacing={1}
-            sx={{ justifyContent: "center", mr: "auto" }}
+            sx={{ justifyContent: "space-between", mr: "auto" , alignItems: "center"}}
           >
-            <CustomIcon />
+            {pageDict[currentPage].icon}
             <Typography
-              variant="h4"
+              variant="h4" 
               component="h1"
               sx={{ color: "text.primary" }}
             >
-              Dashboard
+              {currentPage}
             </Typography>
           </Stack>
           <ColorModeIconDropdown />
           <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>
             <MenuRoundedIcon />
           </MenuButton>
-          <SideMenuMobile open={open} toggleDrawer={toggleDrawer} />
+          <SideMenuMobile
+            open={open}
+            toggleDrawer={toggleDrawer}
+            pageDict={pageDict}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </Stack>
       </Toolbar>
     </AppBar>
@@ -106,3 +114,9 @@ export function CustomIcon() {
     </Box>
   );
 }
+
+AppNavbar.propTypes = {
+  pageDict: PropTypes.object,
+  currentPage: PropTypes.string,
+  setCurrentPage: PropTypes.func,
+};

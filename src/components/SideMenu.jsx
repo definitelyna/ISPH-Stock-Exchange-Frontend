@@ -6,11 +6,9 @@ import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import MenuContent from "./MenuContent";
-import CardAlert from "./CardAlert";
 import OptionsMenu from "./OptionsMenu";
 import PropTypes from "prop-types";
 import CardMedia from "@mui/material/CardMedia";
-import IsphLogo from "../../public/isphLogo.png"
 
 
 const drawerWidth = 240;
@@ -83,7 +81,7 @@ export default function SideMenu({pageDict, currentPage, setCurrentPage}) {
   );  
 }
 SideMenu.propTypes = {
-  pageDict: PropTypes.array,
+  pageDict: PropTypes.object,
   currentPage: PropTypes.string,
   setCurrentPage: PropTypes.func
 }
