@@ -3,33 +3,39 @@ import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 90 },
   {
-    field: "firstName",
-    headerName: "First name",
+    field: "stock_ticker",
+    headerName: "Stock Ticker",
     width: 150,
     editable: false,
   },
   {
-    field: "lastName",
-    headerName: "Last name",
+    field: "stock_name",
+    headerName: "Stock Name",
     width: 150,
+    editable: false,
+    visibility: false
+  },
+  {
+    field: "full_name",
+    headerName: "Name",
+    type: "string",
+    width: 110,
     editable: false,
   },
   {
-    field: "age",
-    headerName: "Age",
+    field: "current_price",
+    headerName: "Price",
     type: "number",
     width: 110,
     editable: false,
   },
   {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (value, row) => `${row.firstName || ""} ${row.lastName || ""}`,
+    field: "volume",
+    headerName: "Volume",
+    type: "number",
+    width: 110,
+    editable: false,
   },
 ];
 
@@ -46,19 +52,21 @@ const rows = [
 ];
 
 export default function Stocks() {
-  const [apiData, setApiData] = useState("")
+  const [apiData, setApiData] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetch(
+        const response = await fetch(
           "https://isph-stock-exchange-backend-api.vercel.app/api/stocks/",
           {
-            mode: "no-cors",
             method: "GET",
           }
         );
 
-        setApiData(result)
+        const data = await response.json();
+        setApiData(data);
+
+        console.log(data);
       } catch (err) {
         console.log(err);
       }
@@ -70,7 +78,9 @@ export default function Stocks() {
     <>
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={rows}
+          rows={apiData}
+          disableRowSelectionOnClick
+          getRowId={(row) => row.stock_ticker}
           columns={columns}
           initialState={{
             pagination: {
@@ -80,11 +90,8 @@ export default function Stocks() {
             },
           }}
           pageSizeOptions={[5]}
-          checkboxSelection
-          disableRowSelectionOnClick
         />
       </Box>
-      {apiData}
     </>
   );
 }

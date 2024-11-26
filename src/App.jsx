@@ -42,9 +42,21 @@ const pageDict = {
     component: <Portfolio />,
     icon: <HelpIcon />,
   },
-  Trade: { name: "Trade", component: <Trade />, icon: <PaidIcon /> },
-  Market: { name: "Market", component: <Market />, icon: <ShowChartIcon /> },
-  Stocks: { name: "Stocks", component: <Stocks />, icon: <ListIcon /> },
+  Trade: {
+    name: "Trade",
+    component: <Trade />,
+    icon: <PaidIcon />,
+  },
+  Market: {
+    name: "Market",
+    component: <Market />,
+    icon: <ShowChartIcon />,
+  },
+  Stocks: {
+    name: "Stocks",
+    component: <Stocks />,
+    icon: <ListIcon />,
+  },
   Profile: {
     name: "Profile",
     component: <Profile />,
