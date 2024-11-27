@@ -49,17 +49,8 @@ const pageDict = {
 const xThemeComponents = {};
 
 export default function Overlay({ children }) {
-    const navigate = useNavigate()
     const lastPage = window.localStorage.getItem("currentPage") == undefined ? "Dashboard" : window.localStorage.getItem("currentPage");
-    console.log("last page: " + lastPage)
     const [currentPage, setCurrentPage] = useState(lastPage);
-
-
-//   useEffect(() => {
-//     console.log(`current page local storage set to: ${currentPage}`)
-//     window.localStorage.setItem("currentPage", currentPage)
-//     console.log(pageDict[currentPage][navigation])
-//   }, [currentPage])
 
   return (
     <AppTheme themeComponents={xThemeComponents}>

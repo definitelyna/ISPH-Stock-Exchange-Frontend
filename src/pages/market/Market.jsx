@@ -7,9 +7,11 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import Chart from "react-apexcharts";
 import Overlay from "../../components/Overlay";
+import { IgrFinancialChartModule, IgrFinancialChart } from "igniteui-react-charts";
 //Get stock price history data from api in form of object, get Object.keys() as xAxis and Object.values() as series
+
+IgrFinancialChartModule.register()
 
 const getFormattedDate = (dt) => {
   return dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate();
@@ -32,9 +34,10 @@ export default function Market() {
   const [currentGraphData, setCurrentGraphData] = useState([]);
   const [isAnotherHour, setIsAnotherHour] = useState(true);
   const [graphView, setGraphView] = useState("Daily");
+  const [apiData, setApiData] = useState()
+  const [currentStock, setCurrentStock] = useState("AZC")
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchPriceHistory = async () => {
       try {
         const result = await fetch(
           "https://isph-sse.vercel.app/stocks/stock-history",
@@ -44,21 +47,28 @@ export default function Market() {
         );
 
         const data = await result.json();
-        setCurrentGraphData(getGraphData(data, "AZC", "daily"));
-        setDailyGraphData(getGraphData(data, "AZC", "daily"));
-        setHourlyGraphData(getGraphData(data, "AZC", "hourly"));
+        return data
+
+        // setCurrentGraphData(getGraphData(data, "AZC", "daily"));
+        // setDailyGraphData(getGraphData(data, "AZC", "daily"));
+        // setHourlyGraphData(getGraphData(data, "AZC", "hourly"));
       } catch (err) {
         console.log(err);
       }
     };
 
-    fetchData();
+  useEffect(() => {
+    const loadData = async() => {
+      const thisApiData = await fetchPriceHistory()
+      setApiData(thisApiData);
+      setGraphData(thisApiData, currentStock, "day")
+    }
+
+    loadData()
   }, []);
 
-  const getGraphData = (thisApiData, stockTicker, view) => {
-    console.log(thisApiData);
+  const setGraphData = (thisApiData = apiData, stockTicker, view) => {
     let tickerFilteredData = thisApiData[stockTicker];
-
     let sortedApiData = tickerFilteredData.sort(function (a, b) {
       return new Date(a.timestamp) - new Date(b.timestamp);
     });
@@ -66,10 +76,11 @@ export default function Market() {
     let returnGraphData = [];
 
     const formatDate = (date) => {
-      return view === "daily"
+      return view === "day"
         ? getFormattedDate(date)
         : getFormattedDateWithHour(date);
     };
+
 
     sortedApiData.forEach((eachData) => {
       const currentDate = new Date(eachData.timestamp);
@@ -91,122 +102,66 @@ export default function Market() {
       }
     });
 
-    returnGraphData.forEach((thisDayData) => {
+    returnGraphData.forEach((thisDayData, index) => {
       const prices = thisDayData.y;
       const openPrice = prices[0];
       const highPrice = Math.max(...prices);
       const lowPrice = Math.min(...prices);
       const closePrice = prices[prices.length - 1];
 
-      thisDayData.y = [openPrice, highPrice, lowPrice, closePrice];
+      returnGraphData[index] = {"Date" : thisDayData.x, "Open": openPrice,"High": highPrice, "Low": lowPrice, "Close": closePrice};
     });
 
-    return returnGraphData;
-  };
-
-  const candlestickChartOption = {
-    noData: {
-      text: "Loading... ",
-    },
-    tooltip: {
-      theme: "dark",
-      x: {
-        show: true,
-        format: "dd MMM",
-      },
-    },
-    chart: {
-      height: "50%",
-      width: "100%",
-      toolbar: {
-        show: true,
-        tools: {
-          download: true,
-          selection: false,
-          zoom: false,
-          zoomin: false,
-          zoomout: false,
-          pan: true,
-        },
-        autoSelected: "pan",
-      },
-      animations: {
-        enabled: false,
-      },
-      zoom: {
-        enabled: true,
-        type: "x",
-        autoScaleYaxis: true,
-      },
-      events: {
-        zoomed: (chartContext, { xaxis }) => {
-          const start = new Date(xaxis.min).setHours(0, 0, 0);
-          const end = new Date(xaxis.max).setHours(0, 0, 0);
-
-          // Check if the range represents a single day
-          if (end - start <= 86400000 && isAnotherHour) {
-            console.log(end, start);
-            const filteredHourlyData = hourlyGraphData.filter(
-              (data) => data.x >= xaxis.min && data.x <= xaxis.max
-            );
-            console.log(filteredHourlyData);
-            setCurrentGraphData(filteredHourlyData);
-            setIsAnotherHour(false);
-          } else if (end - start >= 86400000) {
-            setCurrentGraphData(dailyGraphData);
-            setIsAnotherHour(true);
-          }
-        },
-      },
-    },
-    xaxis: {
-      type: "datetime",
-    },
-    yaxis: {},
+    setCurrentGraphData(returnGraphData)
   };
 
   const handleChangeView = (event, newAlignment) => {
     setGraphView(newAlignment);
   };
 
+  const CustomTooltip = (context) => {
+    if (!context || !context.item) {
+      return null; // Handle cases where context or item is undefined
+    }
+
+    const { item } = context; // Access data for the hovered item
+    return (
+      <div style={{ padding: "10px", background: "#333", color: "#fff" }}>
+        sup
+
+      </div>
+    );
+};
+
   return (
     <Overlay>
       <Container maxWidth="100%">
-        <Box sx={{ width: "100%" }}>
-          {/* <Chart
-            type="candlestick"
-            width="100%"
-            options={candlestickChartOption}
-            series={[
-              {
-                data: currentGraphData,
-              },
-            ]}
-          /> */}
-          {/* <IgrFinancialChart
+        <Box sx={{ width: "100%", aspectRatio: "1/0.5" }}>
+          <IgrFinancialChart
+            tooltipTemplate={CustomTooltip}
             width="100%"
             height="100%"
             isToolbarVisible={false}
             chartType="Candle"
-            chartTitle="S&P 500"
+            chartTitle={currentStock}
             titleAlignment="Left"
             titleLeftMargin="25"
             titleTopMargin="10"
             titleBottomMargin="10"
-            subtitle="CME - CME Delayed Price, Currency in USD"
+            subtitle="Currency in ISPHD"
             subtitleAlignment="Left"
             subtitleLeftMargin="25"
             subtitleTopMargin="5"
             subtitleBottomMargin="10"
             yAxisLabelLocation="OutsideLeft"
             yAxisMode="Numeric"
-            yAxisTitle="Financial Prices"
+            yAxisTitle="Prices"
             yAxisTitleLeftMargin="10"
             yAxisTitleRightMargin="5"
             yAxisLabelLeftMargin="0"
             zoomSliderType="None"
-            dataSource={this.data}
-          /> */}
+            dataSource={currentGraphData}
+            />
         </Box>
 
         <ToggleButtonGroup

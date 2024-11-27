@@ -64,12 +64,13 @@ export default function AppNavbar({pageDict, currentPage, setCurrentPage}) {
             spacing={1}
             sx={{ justifyContent: "space-between", mr: "auto" , alignItems: "center"}}
           >
-            {/* {pageDict[currentPage].icon} */}
+            {pageDict[currentPage].icon}
             <Typography
               variant="h4" 
               component="h1"
               sx={{ color: "text.primary" }}
             >
+            {currentPage}
             </Typography>
           </Stack>
           <ColorModeIconDropdown />
