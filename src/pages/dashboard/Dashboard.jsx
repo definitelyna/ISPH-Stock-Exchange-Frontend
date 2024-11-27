@@ -1,3 +1,5 @@
+import Overlay from "../../components/Overlay";
+
 export default function Dashboard() {
-  return <>Dashboard</>;
+  return <Overlay><p>Dashboard</p></Overlay>;
 }

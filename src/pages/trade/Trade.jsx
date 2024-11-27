@@ -1,3 +1,5 @@
+import Overlay from "../../components/Overlay";
+
 export default function Trade() {
-  return <>Trade page</>;
+  return <Overlay>Trade page</Overlay>;
 }

@@ -1,3 +1,9 @@
+import Overlay from "../../components/Overlay";
+
 export default function Profile() {
-  return <>Profile page</>;
+  return (
+    <Overlay>
+      <p>Profile page</p>
+    </Overlay>
+  );
 }

@@ -5,8 +5,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuContent({pageDict, currentPage, setCurrentPage}) {
+  const navigate = useNavigate()
+
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: "space-between" }}>
       <List dense>
@@ -15,7 +18,12 @@ export default function MenuContent({pageDict, currentPage, setCurrentPage}) {
             key={index}
             disablePadding
             sx={{ display: "block" }}
-            onClick={() => setCurrentPage(item.name)}
+            onClick={() => {
+              setCurrentPage(item.name);
+              window.localStorage.setItem("currentPage", item.name);
+              navigate(item.navigation);
+
+            }}
           >
             <ListItemButton selected={item.name == currentPage}>
               <ListItemIcon>{item.icon}</ListItemIcon>
