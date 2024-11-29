@@ -32,16 +32,24 @@ const columns = [
     editable: false,
   },
   {
-    field: "volume",
-    headerName: "Volume",
+    field: "total_volume",
+    headerName: "Total Volume",
     type: "number",
     width: 110,
+    editable: false,
+  },
+  {
+    field: "volume_available",
+    headerName: "Volume Available",
+    type: "number",
+    width: 200,
     editable: false,
   },
 ];
 
 export default function Stocks() {
   const [apiData, setApiData] = useState("");
+  const [stockData, setStockData] = useState("")
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,6 +60,9 @@ export default function Stocks() {
         const data = await response.json();
         setApiData(data);
 
+        const transformedData = transformData(data)
+        setStockData(transformedData)
+
         console.log(data);
       } catch (err) {
         console.log(err);
@@ -60,11 +71,21 @@ export default function Stocks() {
     fetchData();
   }, []);
 
+  const transformData = (apiData) => {
+    let dataArr = []
+    Object.keys(apiData).forEach((stockName) => {
+      apiData[stockName]["stock_ticker"] = stockName
+      dataArr.push(apiData[stockName])
+    })
+
+    return dataArr
+  }
+
   return (
     <Overlay>
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={apiData}
+          rows={stockData}
           disableRowSelectionOnClick
           getRowId={(row) => row.stock_ticker}
           columns={columns}

@@ -20,6 +20,7 @@
     "@toolpad/core": "^0.1.55",
     "apexcharts": "^3.54.1",
     "dayjs": "^1.11.13",
+    "firebase": "^11.0.2",
     "igniteui-cli": "^14.3.0",
     "igniteui-react": "^18.7.4",
     "igniteui-react-charts": "^18.7.4",

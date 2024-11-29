@@ -14,6 +14,7 @@ import {
   Profile,
   Stocks,
   Trade,
+  SignIn,
 } from "./pages/pages";
 
 const router = createBrowserRouter([
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
   {
     path: "/trade",
     element: <Trade />
+  },
+  {
+    path: "/signIn",
+    element: <SignIn />
   }
 ], {
     future: {
@@ -61,5 +66,5 @@ const router = createBrowserRouter([
 });
 
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <RouterProvider router={router} future={{ v7_startTransition: true }}/>
 );

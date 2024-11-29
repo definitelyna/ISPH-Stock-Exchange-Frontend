@@ -40,7 +40,7 @@ export default function Market() {
   const fetchPriceHistory = async () => {
       try {
         const result = await fetch(
-          "https://isph-sse.vercel.app/stocks/stock-history",
+          `${import.meta.env.VITE_BACKEND_API}/stocks/stock-history`,
           {
             method: "GET",
           }
@@ -115,11 +115,12 @@ export default function Market() {
     setCurrentGraphData(returnGraphData)
   };
 
-  const handleChangeView = (event, newAlignment) => {
-    setGraphView(newAlignment);
+  const handleChangeView = (event, newView) => {
+    console.log(newView)
   };
 
   const CustomTooltip = (context) => {
+    console.log(context)
     if (!context || !context.item) {
       return null; // Handle cases where context or item is undefined
     }
@@ -161,16 +162,17 @@ export default function Market() {
             yAxisLabelLeftMargin="0"
             zoomSliderType="None"
             dataSource={currentGraphData}
+            tooltipTemplates={CustomTooltip}
             />
         </Box>
 
         <ToggleButtonGroup
           value={graphView}
           exclusive
-          onChange={(e, newView) => setGraphView(newView)}
+          onChange={(e, newView) => console.log(`changed view to ${newView}`)}
         >
-          <ToggleButton value="Daily">Day</ToggleButton>
-          <ToggleButton value="Hourly">Hour</ToggleButton>
+          <ToggleButton value="Day">Day</ToggleButton>
+          <ToggleButton value="Hour">Hour</ToggleButton>
         </ToggleButtonGroup>
       </Container>
     </Overlay>
