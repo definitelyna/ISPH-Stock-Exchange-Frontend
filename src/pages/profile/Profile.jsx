@@ -1,4 +1,4 @@
-import Overlay from "../../components/Overlay";
+import Overlay from "../../components/Overlay/Overlay";
 
 export default function Profile() {
   return (

@@ -1,15 +1,13 @@
 import { styled } from "@mui/material/styles";
-import Avatar from "@mui/material/Avatar";
 import MuiDrawer, { drawerClasses } from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import MenuContent from "./MenuContent";
 import OptionsMenu from "./OptionsMenu";
 import PropTypes from "prop-types";
 import CardMedia from "@mui/material/CardMedia";
-
+import UserCard from "./UserCard";
 
 const drawerWidth = 240;
 
@@ -24,7 +22,7 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function SideMenu({pageDict, currentPage, setCurrentPage}) {
+export default function SideMenu({ pageDict, currentPage, setCurrentPage }) {
   return (
     <Drawer
       variant="permanent"
@@ -42,7 +40,6 @@ export default function SideMenu({pageDict, currentPage, setCurrentPage}) {
           p: 1.5,
         }}
       >
-
         <Stack
           direction="row"
           sx={{
@@ -51,37 +48,35 @@ export default function SideMenu({pageDict, currentPage, setCurrentPage}) {
             alignItems: "center",
           }}
         >
-          <Avatar
-            sizes="small"
-            alt="Riley Carter"
-            src="/static/images/avatar/7.jpg"
-            sx={{ width: 36, height: 36 }}
-          />
-          <Box sx={{ mr: "auto" }}>
-            <Typography
-              variant="body2"
-              sx={{ fontWeight: 500, lineHeight: "16px" }}
-            >
-              Username
-            </Typography>
-            <Typography variant="caption" sx={{ color: "text.secondary" }}>
-              useremail@email.com
-            </Typography>
-          </Box>
+          <UserCard />
           <OptionsMenu />
         </Stack>
       </Box>
 
       <Divider />
 
-      <MenuContent pageDict={pageDict} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+      <MenuContent
+        pageDict={pageDict}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
 
-      <CardMedia component="img" image="../../public/isphLogo.png" sx={{borderRadius: "50%", width: "70%", marginInline: "auto", marginBottom: "13%"}}/>
+      <CardMedia
+        component="img"
+        image="../../public/isphLogo.png"
+        sx={{
+          borderRadius: "50%",
+          width: "70%",
+          marginInline: "auto",
+          marginBottom: "13%",
+        }}
+      />
     </Drawer>
-  );  
+  );
 }
 SideMenu.propTypes = {
   pageDict: PropTypes.object,
   currentPage: PropTypes.string,
-  setCurrentPage: PropTypes.func
-}
+  setCurrentPage: PropTypes.func,
+};
+

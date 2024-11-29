@@ -1,7 +1,5 @@
-import Overlay from "../../components/Overlay";
+import Overlay from "../../components/Overlay/Overlay";
 
 export default function Portfolio() {
-  return <Overlay>
-    
-  </Overlay>;
+  return <Overlay></Overlay>;
 }

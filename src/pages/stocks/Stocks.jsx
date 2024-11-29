@@ -1,7 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
-import Overlay from "../../components/Overlay";
+import Overlay from "../../components/Overlay/Overlay";
 
 const columns = [
   {
@@ -15,7 +15,7 @@ const columns = [
     headerName: "Stock Name",
     width: 150,
     editable: false,
-    visibility: false
+    visibility: false,
   },
   {
     field: "full_name",
@@ -49,7 +49,7 @@ const columns = [
 
 export default function Stocks() {
   const [apiData, setApiData] = useState("");
-  const [stockData, setStockData] = useState("")
+  const [stockData, setStockData] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -60,8 +60,8 @@ export default function Stocks() {
         const data = await response.json();
         setApiData(data);
 
-        const transformedData = transformData(data)
-        setStockData(transformedData)
+        const transformedData = transformData(data);
+        setStockData(transformedData);
 
         console.log(data);
       } catch (err) {
@@ -72,14 +72,14 @@ export default function Stocks() {
   }, []);
 
   const transformData = (apiData) => {
-    let dataArr = []
+    let dataArr = [];
     Object.keys(apiData).forEach((stockName) => {
-      apiData[stockName]["stock_ticker"] = stockName
-      dataArr.push(apiData[stockName])
-    })
+      apiData[stockName]["stock_ticker"] = stockName;
+      dataArr.push(apiData[stockName]);
+    });
 
-    return dataArr
-  }
+    return dataArr;
+  };
 
   return (
     <Overlay>

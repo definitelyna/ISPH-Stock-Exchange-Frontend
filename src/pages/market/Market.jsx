@@ -7,11 +7,14 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import Overlay from "../../components/Overlay";
-import { IgrFinancialChartModule, IgrFinancialChart } from "igniteui-react-charts";
+import Overlay from "../../components/Overlay/Overlay";
+import {
+  IgrFinancialChartModule,
+  IgrFinancialChart,
+} from "igniteui-react-charts";
 //Get stock price history data from api in form of object, get Object.keys() as xAxis and Object.values() as series
 
-IgrFinancialChartModule.register()
+IgrFinancialChartModule.register();
 
 const getFormattedDate = (dt) => {
   return dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate();
@@ -34,37 +37,37 @@ export default function Market() {
   const [currentGraphData, setCurrentGraphData] = useState([]);
   const [isAnotherHour, setIsAnotherHour] = useState(true);
   const [graphView, setGraphView] = useState("Daily");
-  const [apiData, setApiData] = useState()
-  const [currentStock, setCurrentStock] = useState("AZC")
+  const [apiData, setApiData] = useState();
+  const [currentStock, setCurrentStock] = useState("AZC");
 
   const fetchPriceHistory = async () => {
-      try {
-        const result = await fetch(
-          `${import.meta.env.VITE_BACKEND_API}/stocks/stock-history`,
-          {
-            method: "GET",
-          }
-        );
+    try {
+      const result = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/stocks/stock-history`,
+        {
+          method: "GET",
+        }
+      );
 
-        const data = await result.json();
-        return data
+      const data = await result.json();
+      return data;
 
-        // setCurrentGraphData(getGraphData(data, "AZC", "daily"));
-        // setDailyGraphData(getGraphData(data, "AZC", "daily"));
-        // setHourlyGraphData(getGraphData(data, "AZC", "hourly"));
-      } catch (err) {
-        console.log(err);
-      }
-    };
+      // setCurrentGraphData(getGraphData(data, "AZC", "daily"));
+      // setDailyGraphData(getGraphData(data, "AZC", "daily"));
+      // setHourlyGraphData(getGraphData(data, "AZC", "hourly"));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    const loadData = async() => {
-      const thisApiData = await fetchPriceHistory()
+    const loadData = async () => {
+      const thisApiData = await fetchPriceHistory();
       setApiData(thisApiData);
-      setGraphData(thisApiData, currentStock, "day")
-    }
+      setGraphData(thisApiData, currentStock, "day");
+    };
 
-    loadData()
+    loadData();
   }, []);
 
   const setGraphData = (thisApiData = apiData, stockTicker, view) => {
@@ -80,7 +83,6 @@ export default function Market() {
         ? getFormattedDate(date)
         : getFormattedDateWithHour(date);
     };
-
 
     sortedApiData.forEach((eachData) => {
       const currentDate = new Date(eachData.timestamp);
@@ -109,18 +111,24 @@ export default function Market() {
       const lowPrice = Math.min(...prices);
       const closePrice = prices[prices.length - 1];
 
-      returnGraphData[index] = {"Date" : thisDayData.x, "Open": openPrice,"High": highPrice, "Low": lowPrice, "Close": closePrice};
+      returnGraphData[index] = {
+        Date: thisDayData.x,
+        Open: openPrice,
+        High: highPrice,
+        Low: lowPrice,
+        Close: closePrice,
+      };
     });
 
-    setCurrentGraphData(returnGraphData)
+    setCurrentGraphData(returnGraphData);
   };
 
   const handleChangeView = (event, newView) => {
-    console.log(newView)
+    console.log(newView);
   };
 
   const CustomTooltip = (context) => {
-    console.log(context)
+    console.log(context);
     if (!context || !context.item) {
       return null; // Handle cases where context or item is undefined
     }
@@ -129,10 +137,9 @@ export default function Market() {
     return (
       <div style={{ padding: "10px", background: "#333", color: "#fff" }}>
         sup
-
       </div>
     );
-};
+  };
 
   return (
     <Overlay>
@@ -163,7 +170,7 @@ export default function Market() {
             zoomSliderType="None"
             dataSource={currentGraphData}
             tooltipTemplates={CustomTooltip}
-            />
+          />
         </Box>
 
         <ToggleButtonGroup

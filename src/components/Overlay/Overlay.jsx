@@ -1,4 +1,4 @@
-import AppTheme from "../shared-theme/AppTheme";
+import AppTheme from "../../shared-theme/AppTheme";
 import { CssBaseline, Box } from "@mui/material";
 import SideMenu from "./SideMenu";
 import AppNavbar from "./AppNavbar";
@@ -9,8 +9,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ListIcon from "@mui/icons-material/List";
 import PaidIcon from "@mui/icons-material/Paid";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const pageDict = {
   Dashboard: {
@@ -49,8 +48,11 @@ const pageDict = {
 const xThemeComponents = {};
 
 export default function Overlay({ children }) {
-    const lastPage = window.localStorage.getItem("currentPage") == undefined ? "Dashboard" : window.localStorage.getItem("currentPage");
-    const [currentPage, setCurrentPage] = useState(lastPage);
+  const lastPage =
+    window.localStorage.getItem("currentPage") == undefined
+      ? "Dashboard"
+      : window.localStorage.getItem("currentPage");
+  const [currentPage, setCurrentPage] = useState(lastPage);
 
   return (
     <AppTheme themeComponents={xThemeComponents}>

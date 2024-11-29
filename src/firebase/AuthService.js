@@ -4,8 +4,10 @@ import {
   signOut,
   getRedirectResult,
   signInWithPopup,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { auth, googleProvider } from "./firebase";
+import { useState, useEffect } from "react";
 
 // Sign up
 export const signUp = async (email, password) => {
@@ -45,3 +47,28 @@ export const handleRedirectResult = async () => {
 export const logOut = async () => {
   return await signOut(auth);
 };
+
+//Get current user
+
+export default function useAuth () {
+  const [user, setUser] = useState(null); // Null means not authenticated
+  const [loading, setLoading] = useState(true); // To handle initial loading state
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser); // Set the user object or null
+      setLoading(false); // Loading is complete
+    });
+
+    return () => unsubscribe(); // Cleanup listener on unmount
+  }, []);
+
+  return { user, loading };
+};
+
+
+
+
+
+
+
