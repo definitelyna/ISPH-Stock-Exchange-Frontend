@@ -1,9 +1,14 @@
 import Overlay from "../../components/Overlay/Overlay";
+import { Container, Typography } from "@mui/material";
 
 export default function Profile() {
   return (
     <Overlay>
-      <p>Profile page</p>
+      <Container>
+        <Typography>
+          Profile
+        </Typography>
+      </Container>
     </Overlay>
   );
 }

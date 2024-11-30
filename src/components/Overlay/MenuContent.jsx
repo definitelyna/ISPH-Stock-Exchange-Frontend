@@ -5,10 +5,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-export default function MenuContent({pageDict, currentPage, setCurrentPage}) {
+export default function MenuContent({pageDict, setCurrentPage}) {
   const navigate = useNavigate()
+  const currentLocation = useLocation()
+  const currentPath = currentLocation.pathname == "/" ? "/dashboard" : currentLocation.pathname
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: "space-between" }}>
@@ -20,12 +22,10 @@ export default function MenuContent({pageDict, currentPage, setCurrentPage}) {
             sx={{ display: "block" }}
             onClick={() => {
               setCurrentPage(item.name);
-              window.localStorage.setItem("currentPage", item.name);
               navigate(item.navigation);
-
             }}
           >
-            <ListItemButton selected={item.name == currentPage}>
+            <ListItemButton selected={item.navigation == currentPath}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.name} />
             </ListItemButton>

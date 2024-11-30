@@ -9,7 +9,8 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ListIcon from "@mui/icons-material/List";
 import PaidIcon from "@mui/icons-material/Paid";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const pageDict = {
   Dashboard: {
@@ -37,22 +38,32 @@ const pageDict = {
     navigation: "/stocks",
     icon: <ListIcon />,
   },
-  Profile: {
-    name: "Profile",
-    navigation: "/profile",
-    icon: <AccountBoxIcon />,
-  },
+  // Profile: {
+  //   name: "Profile",
+  //   navigation: "/profile",
+  //   icon: <AccountBoxIcon />,
+  // },
   Help: { name: "Help", navigation: "/help", icon: <HelpIcon /> },
 };
 
 const xThemeComponents = {};
 
 export default function Overlay({ children }) {
-  const lastPage =
-    window.localStorage.getItem("currentPage") == undefined
-      ? "Dashboard"
-      : window.localStorage.getItem("currentPage");
-  const [currentPage, setCurrentPage] = useState(lastPage);
+  const currentLocation = useLocation();
+  const [currentPage, setCurrentPage] = useState("Dashboard");
+
+  useEffect(() => {
+    // Find the first match between pageDict's navigation and the current path
+    const matchedPage = Object.keys(pageDict).find(
+      (page) => pageDict[page].navigation === currentLocation.pathname
+    );
+
+    // Set the current page name if a match is found
+    if (matchedPage) {
+      const pageName = pageDict[matchedPage].name;
+      setCurrentPage(pageName);
+    }
+  }, [currentLocation, pageDict]);
 
   return (
     <AppTheme themeComponents={xThemeComponents}>

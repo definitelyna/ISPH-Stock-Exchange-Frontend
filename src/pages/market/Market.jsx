@@ -12,8 +12,10 @@ import {
   IgrFinancialChartModule,
   IgrFinancialChart,
 } from "igniteui-react-charts";
+import { fetchApiData } from "../../api/apiClient";
 //Get stock price history data from api in form of object, get Object.keys() as xAxis and Object.values() as series
 
+const apiUrl = import.meta.env.VITE_BACKEND_API
 IgrFinancialChartModule.register();
 
 const getFormattedDate = (dt) => {
@@ -40,29 +42,10 @@ export default function Market() {
   const [apiData, setApiData] = useState();
   const [currentStock, setCurrentStock] = useState("AZC");
 
-  const fetchPriceHistory = async () => {
-    try {
-      const result = await fetch(
-        `${import.meta.env.VITE_BACKEND_API}/stocks/stock-history`,
-        {
-          method: "GET",
-        }
-      );
-
-      const data = await result.json();
-      return data;
-
-      // setCurrentGraphData(getGraphData(data, "AZC", "daily"));
-      // setDailyGraphData(getGraphData(data, "AZC", "daily"));
-      // setHourlyGraphData(getGraphData(data, "AZC", "hourly"));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     const loadData = async () => {
-      const thisApiData = await fetchPriceHistory();
+      const thisApiData = await fetchApiData(apiUrl, "GET", "/stocks/stock-history");
+      console.log(thisApiData)
       setApiData(thisApiData);
       setGraphData(thisApiData, currentStock, "day");
     };

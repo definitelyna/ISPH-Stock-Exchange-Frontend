@@ -38,6 +38,7 @@ export default function SideMenu({ pageDict, currentPage, setCurrentPage }) {
           display: "flex",
           mt: "calc(var(--template-frame-height, 0px) + 4px)",
           p: 1.5,
+          height: 60
         }}
       >
         <Stack

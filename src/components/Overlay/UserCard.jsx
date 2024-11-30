@@ -53,9 +53,7 @@ const LoggedOutCard = () => {
 
 export default function UserCard() {
   const { user, loading } = useAuth();
-  return loading ? (
-    <LoadingCard />
-  ) : user ? (
+  return user ? (
     <LoggedInCard/>
   ) : (
     <LoggedOutCard />

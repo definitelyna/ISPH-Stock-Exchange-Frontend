@@ -48,8 +48,7 @@ export const logOut = async () => {
   return await signOut(auth);
 };
 
-//Get current user
-
+//Get current authentication state (logged in, logged out, loading)
 export default function useAuth () {
   const [user, setUser] = useState(null); // Null means not authenticated
   const [loading, setLoading] = useState(true); // To handle initial loading state

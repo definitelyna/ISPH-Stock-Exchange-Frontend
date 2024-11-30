@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Divider, { dividerClasses } from "@mui/material/Divider";
 import Menu from "@mui/material/Menu";
@@ -6,11 +5,13 @@ import MuiMenuItem from "@mui/material/MenuItem";
 import { paperClasses } from "@mui/material/Paper";
 import { listClasses } from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon, { listItemIconClasses } from "@mui/material/ListItemIcon";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
 import MenuButton from "./MenuButton";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { logOut } from "../../firebase/AuthService";
 
 const MenuItem = styled(MuiMenuItem)({
   margin: "2px 0",
@@ -18,7 +19,7 @@ const MenuItem = styled(MuiMenuItem)({
 
 export default function OptionsMenu() {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,8 +27,17 @@ export default function OptionsMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogOut = () => {
+    logOut();
+    navigate("/");
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profile")
+  }
   return (
-    <React.Fragment>
+    <>
       <MenuButton
         aria-label="Open menu"
         onClick={handleClick}
@@ -55,29 +65,23 @@ export default function OptionsMenu() {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
         <Divider />
-        <MenuItem onClick={() => navigate("/signIn")}>
-          Add another account
-        </MenuItem>
         <MenuItem onClick={handleClose}>Settings</MenuItem>
         <Divider />
         <MenuItem
-          onClick={handleClose}
+          onClick={handleLogOut}
           sx={{
-            [`& .${listItemIconClasses.root}`]: {
-              ml: "auto",
-              minWidth: 0,
-            },
+            minWidth: 50,
+            justifyContent: "space-between",
           }}
         >
           <ListItemText>Logout</ListItemText>
-          <ListItemIcon>
+          <ListItemIcon sx={{ justifyContent: "right" }}>
             <LogoutRoundedIcon fontSize="small" />
           </ListItemIcon>
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </>
   );
 }

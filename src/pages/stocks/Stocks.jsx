@@ -2,6 +2,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import Overlay from "../../components/Overlay/Overlay";
+import { fetchApiData } from "../../api/apiClient";
+
+const apiUrl = import.meta.env.VITE_BACKEND_API;
 
 const columns = [
   {
@@ -48,25 +51,14 @@ const columns = [
 ];
 
 export default function Stocks() {
-  const [apiData, setApiData] = useState("");
-  const [stockData, setStockData] = useState("");
+  const [stockData, setStockData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch("https://isph-sse.vercel.app/stocks", {
-          method: "GET",
-        });
+      const data = await fetchApiData(apiUrl, "GET", "/stocks");
+      const transformedData = transformData(data);
+      setStockData(transformedData);
 
-        const data = await response.json();
-        setApiData(data);
-
-        const transformedData = transformData(data);
-        setStockData(transformedData);
-
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
+      console.log(transformedData);
     };
     fetchData();
   }, []);
