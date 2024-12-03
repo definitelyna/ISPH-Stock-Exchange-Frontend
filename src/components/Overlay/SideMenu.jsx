@@ -8,6 +8,7 @@ import OptionsMenu from './OptionsMenu';
 import PropTypes from 'prop-types';
 import CardMedia from '@mui/material/CardMedia';
 import UserCard from './UserCard';
+import useThemeDetector from '../../hook/useThemeDetector';
 
 const drawerWidth = 240;
 
@@ -23,6 +24,8 @@ const Drawer = styled(MuiDrawer)({
 });
 
 export default function SideMenu({ pageDict, currentPage, setCurrentPage }) {
+  const theme = useThemeDetector();
+  console.log(theme);
   return (
     <Drawer
       variant="permanent"
@@ -64,7 +67,7 @@ export default function SideMenu({ pageDict, currentPage, setCurrentPage }) {
 
       <CardMedia
         component="img"
-        image="../../public/ISPH_LogoBlue.png" // TODO: Change Blue Logo to White on theme change
+        image={theme ? '/ISPH_LogoWhite.png' : '/ISPH_LogoBlue.png'}
         sx={{
           borderRadius: '10%',
           width: '70%',
