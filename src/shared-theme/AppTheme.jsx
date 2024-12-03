@@ -9,7 +9,11 @@ import { navigationCustomizations } from './customizations/navigation';
 import { surfacesCustomizations } from './customizations/surfaces';
 import { colorSchemes, typography, shadows, shape } from './themePrimitives';
 
-export default function AppTheme({ children, disableCustomTheme, themeComponents }) {
+export default function AppTheme({
+  children,
+  disableCustomTheme,
+  themeComponents,
+}) {
   const theme = React.useMemo(() => {
     return disableCustomTheme
       ? {}
@@ -20,7 +24,10 @@ export default function AppTheme({ children, disableCustomTheme, themeComponents
             cssVarPrefix: 'template',
           },
           colorSchemes, // Recently added in v6 for building light & dark mode app, see https://mui.com/material-ui/customization/palette/#color-schemes
-          typography,
+          typography: {
+            ...typography,
+            fontFamily: 'Roboto, sans-serif',
+          },
           shadows,
           shape,
           components: {
@@ -51,4 +58,3 @@ AppTheme.propTypes = {
   disableCustomTheme: PropTypes.bool,
   themeComponents: PropTypes.object,
 };
-
