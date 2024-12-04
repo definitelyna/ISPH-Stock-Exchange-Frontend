@@ -5,7 +5,8 @@ import useAuth from "../../firebase/AuthService";
 import { Doughnut } from "react-chartjs-2";
 import { Box, Container, Typography } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { DataGrid } from '@mui/x-data-grid';
+import StockCard from "./components/StockCard";
+import Grid from "@mui/material/Grid2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -189,7 +190,17 @@ export default function Portfolio() {
             <Typography>Loading</Typography>
           )}
         </Box>
-
+        <Grid container spacing={2} sx={{marginTop: 5}}>
+          <Grid size={{lg: 4, md: 6, xs: 12}}>
+            <StockCard />
+          </Grid>
+          <Grid size={{lg: 4, md: 6, xs: 12}}>
+            <StockCard />
+          </Grid>
+          <Grid size={{lg: 4, md: 6, xs: 12}}>
+            <StockCard />
+          </Grid>
+        </Grid>
       </Container>
     </Overlay>
   );
