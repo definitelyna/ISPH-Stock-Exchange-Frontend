@@ -9,13 +9,13 @@ const useRedisPublisher = () => {
       const redisUrl = process.env.REDIS_URL;
       const redisClient = createClient({ url: redisUrl });
 
-      redisClient.on('error', (err) => console.error('Redis Client Error', err));
+      redisClient.on('error', (err) => console.error('Quang - Redis Client Error', err));
 
       await redisClient.connect();
       setClient(redisClient);
     };
 
-    initializeClient();
+    initializeClient().then(() => console.log('Quang - Redis client connected'));
 
     // Cleanup on unmount
     return () => {
@@ -33,7 +33,7 @@ const useRedisPublisher = () => {
    */
   const publishToChannel = async (userId, userHouse) => {
     if (!client) {
-      console.error('Redis client is not ready');
+      console.error('Quang - Redis client is not ready');
       return;
     }
 
@@ -45,9 +45,9 @@ const useRedisPublisher = () => {
         house: userHouse
       }
       await client.publish(channel, JSON.stringify(message));
-      console.log(`Message published to channel ${channel}:`, message);
+      console.log(`Quang - Message published to channel ${channel}:`, message);
     } catch (error) {
-      console.error('Error publishing to Redis channel:', error);
+      console.error('Quang - Error publishing to Redis channel:', error);
     }
   };
 
