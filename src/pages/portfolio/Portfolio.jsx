@@ -44,10 +44,13 @@ export default function Portfolio() {
         {
           label: "Value",
           data: [],
-          backgroundColor: [],
+          backgroundColor: ["#53ff45","#1E2EDE","#6A041D","#F5B841","#F4FF52"],
         },
       ],
     };
+
+    data.labels.push("Points");
+    data.datasets[0].data.push(apiData.points_balance);
 
     const stockPossession = apiData.items;
 
@@ -65,8 +68,6 @@ export default function Portfolio() {
     });
 
     //Add balance to asset
-    data.labels.push("Points");
-    data.datasets[0].data.push(apiData.points_balance);
 
     return data;
   };
