@@ -21,6 +21,7 @@ import { signInWithGoogle } from "../../firebase/AuthService";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { redirect, useNavigate } from "react-router-dom";
 import { getRedirectResult } from "firebase/auth";
+import useRedisPublisher from "../../hook/useRedisPublisher";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -71,6 +72,9 @@ export default function SignIn(props) {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const publish = useRedisPublisher();
+
+  console.log(publish);
 
   // useEffect(() => {
   //   const checkRedirect = async () => {
@@ -136,7 +140,7 @@ export default function SignIn(props) {
 
   const handleGoogleLogin = async () => {
     const user = await signInWithGoogle();
-    console.log(user)
+    console.log(user);
     navigate("/");
   };
 

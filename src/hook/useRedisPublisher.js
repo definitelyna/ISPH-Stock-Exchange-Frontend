@@ -6,7 +6,7 @@ const useRedisPublisher = () => {
 
   useEffect(() => {
     const initializeClient = async () => {
-      const redisUrl = process.env.REDIS_URL;
+      const redisUrl = import.meta.env.VITE_REDIS_URL;
       const redisClient = createClient({ url: redisUrl });
 
       redisClient.on('error', (err) => console.error('Quang - Redis Client Error', err));

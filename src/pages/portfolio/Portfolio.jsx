@@ -4,23 +4,16 @@ import { fetchApiData } from "../../api/apiClient";
 import useAuth from "../../firebase/AuthService";
 import { Doughnut } from "react-chartjs-2";
 import { Box, Container, Typography } from "@mui/material";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  plugins,
-} from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { DataGrid } from '@mui/x-data-grid';
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const apiUrl = import.meta.env.VITE_BACKEND_API;
 
 export default function Portfolio() {
   const [doughnutData, setDoughnutData] = useState();
-  const [asset, setAsset] = useState({
-    stocks: 0,
-    points: 0,
-  });
+  const [asset, setAsset] = useState({});
 
   const { user } = useAuth();
   const userID = user?.uid;
@@ -36,6 +29,7 @@ export default function Portfolio() {
         const thisDoughnutData = transformedDoughnutData(data);
         setDoughnutData(thisDoughnutData);
         updateAssetObject(data);
+        console.log(data);
       }
     };
 
@@ -53,12 +47,20 @@ export default function Portfolio() {
         },
       ],
     };
-    const stockPossession = apiData.items;
-    Object.keys(stockPossession).forEach((stock) => {
-      const stockValue = stockPossession[stock].quantity; //Currently quantity, needs multiply price to be value when quang adds price
 
-      data.labels.push(stock);
-      data.datasets[0].data.push(stockValue);
+    const stockPossession = apiData.items;
+
+    Object.keys(stockPossession).forEach((stock) => {
+      const thisStockData = stockPossession[stock];
+      const thisStockSector = thisStockData.stockSector;
+      const thisStockValue = thisStockData.evaluation;
+      if (data.labels.includes(thisStockSector)) {
+        const labelIndex = data.labels.indexOf(thisStockSector);
+        data.datasets[0].data[labelIndex] += thisStockValue;
+      } else {
+        data.labels.push(thisStockSector);
+        data.datasets[0].data.push(thisStockValue);
+      }
     });
 
     //Add balance to asset
@@ -69,18 +71,26 @@ export default function Portfolio() {
   };
 
   const updateAssetObject = (apiData) => {
-    let totalStockValue = 0;
+    let newAssetData = {};
     let totalPointValue = apiData.points_balance;
     const stockPossession = apiData.items;
+
     Object.keys(stockPossession).forEach((stock) => {
-      const thisStockValue = stockPossession[stock].quantity; //Currently quantity, needs multiply price to be value when quang adds price
-      totalStockValue += thisStockValue;
+      const thisStockData = stockPossession[stock];
+      const existingStocksInAssetData = Object.keys(newAssetData);
+      const thisStockSector = thisStockData.stockSector;
+      const thisStockValue = thisStockData.evaluation;
+
+      if (existingStocksInAssetData.includes(thisStockSector)) {
+        newAssetData[thisStockSector] += thisStockValue;
+      } else {
+        newAssetData[thisStockSector] = thisStockValue;
+      }
     });
 
-    setAsset({
-      stocks: totalStockValue,
-      points: totalPointValue,
-    });
+    newAssetData.points = totalPointValue;
+    console.log(newAssetData);
+    setAsset(newAssetData);
   };
 
   const CenterTextPlugin = {
@@ -96,11 +106,13 @@ export default function Portfolio() {
       ctx.textBaseline = "middle";
       ctx.fillStyle = "white"; // Set text color
 
-      const text = `Total Assets: ${asset.stocks + asset.points}`;
+      const totalAsset = (asset) =>
+        Object.values(asset).reduce((a, b) => a + b, 0);
+      const text = `Total Assets: ${totalAsset(asset)}`;
       const maxWidth = width * 0.4; // Set max width as a percentage of chart width
       const lineHeight = fontSize * 1.2; // Line height based on font size
       const textX = width / 2;
-      const textY = chart.height/1.8;
+      const textY = chart.height / 1.8;
 
       // Helper function to wrap text
       const wrapText = (ctx, text, maxWidth) => {
@@ -154,17 +166,17 @@ export default function Portfolio() {
 
   return (
     <Overlay>
-      <Container>
-      <Box>
-        
-      </Box>
+      <Container sx={{ padding: 3 }}>
+        <Box>
+          <Typography variant="h3">Your Stock Portfolio</Typography>
+        </Box>
         <Box
           sx={{
             width: 300,
             height: 300,
             marginInline: "auto",
             justifyContent: "center",
-            marginTop: 5
+            marginTop: 5,
           }}
         >
           {doughnutData ? (
@@ -177,6 +189,7 @@ export default function Portfolio() {
             <Typography>Loading</Typography>
           )}
         </Box>
+
       </Container>
     </Overlay>
   );
