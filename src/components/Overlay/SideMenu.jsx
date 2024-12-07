@@ -8,7 +8,7 @@ import OptionsMenu from './OptionsMenu';
 import PropTypes from 'prop-types';
 import CardMedia from '@mui/material/CardMedia';
 import UserCard from './UserCard';
-import useThemeDetector from '../../hook/useThemeDetector';
+import useThemeDetector from '../../hooks/useThemeDetector';
 
 const drawerWidth = 240;
 
@@ -25,7 +25,6 @@ const Drawer = styled(MuiDrawer)({
 
 export default function SideMenu({ pageDict, currentPage, setCurrentPage }) {
   const theme = useThemeDetector();
-  console.log(theme);
   return (
     <Drawer
       variant="permanent"

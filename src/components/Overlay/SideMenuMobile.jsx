@@ -10,7 +10,7 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 
 import MenuButton from "./MenuButton";
 import MenuContent from "./MenuContent";
-import CardAlert from "../CardAlert";
+import CardAlert from "../CameWithTemplate/CardAlert";
 
 function SideMenuMobile({
   open,

@@ -201,6 +201,16 @@ export default function Portfolio() {
           <Grid size={{lg: 4, md: 6, xs: 12}}>
             <StockCard />
           </Grid>
+          <Grid size={{lg: 4, md: 6, xs: 12}}>
+            <StockCard />
+          </Grid>
+          <Grid size={{lg: 4, md: 6, xs: 12}}>
+            <StockCard />
+          </Grid>
+          <Grid size={{lg: 4, md: 6, xs: 12}}>
+            <StockCard />
+          </Grid>
+          
         </Grid>
       </Container>
     </Overlay>
