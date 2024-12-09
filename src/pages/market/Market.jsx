@@ -7,7 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import Overlay from "../../components/Overlay/Overlay";
 import { fetchApiData } from "../../api/apiClient";
-import CandlestickChart from "./components/CandlestickChart";
+// import CandlestickChart from "./components/CandlestickChart";
 import { formatGraphData } from "./MarketUtils";
 
 const apiUrl = import.meta.env.VITE_BACKEND_API;
@@ -85,7 +85,7 @@ export default function Market() {
           </ToggleButtonGroup>
         </Box>
         <Box sx={{ width: "100%", aspectRatio: "1/0.5", marginTop: 3 }}>
-          <CandlestickChart data={currentGraphData} />
+          {/* <CandlestickChart data={currentGraphData} /> */}
         </Box>
       </Container>
     </Overlay>
