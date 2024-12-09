@@ -17,7 +17,7 @@ export default function Market() {
   const [apiData, setApiData] = useState({});
   const [graphView, setGraphView] = useState("day");
   const [graphRange, setGraphRange] = useState("1Y");
-  const [currentStock, setCurrentStock] = useState("HOH");
+  const [currentStock, setCurrentStock] = useState("RBH");
 
   useEffect(() => {
     const loadData = async () => {
