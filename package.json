@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@canvasjs/charts": "^3.10.19",
     "@canvasjs/react-charts": "^1.0.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -24,15 +25,6 @@
     "chart.js": "^4.4.6",
     "dayjs": "^1.11.13",
     "firebase": "^11.0.2",
-    "igniteui-cli": "^14.3.0",
-    "igniteui-react": "^18.7.4",
-    "igniteui-react-charts": "^18.7.4",
-    "igniteui-react-core": "^18.7.4",
-    "igniteui-react-excel": "^18.7.4",
-    "igniteui-react-gauges": "^18.7.4",
-    "igniteui-react-grids": "^18.7.4",
-    "igniteui-react-maps": "^18.7.4",
-    "igniteui-react-spreadsheet": "^18.7.4",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-apexcharts": "^1.5.0",
