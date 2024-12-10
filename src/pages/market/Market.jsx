@@ -15,7 +15,7 @@ const apiUrl = import.meta.env.VITE_BACKEND_API;
 export default function Market() {
   const [currentGraphData, setCurrentGraphData] = useState([]);
   const [apiData, setApiData] = useState({});
-  const [graphView, setGraphView] = useState("day");
+  const [graphView, setGraphView] = useState("Day");
   const [graphRange, setGraphRange] = useState("1Y");
   const [currentStock, setCurrentStock] = useState("RBH");
 
