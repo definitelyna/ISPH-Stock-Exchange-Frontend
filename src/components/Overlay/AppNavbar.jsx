@@ -77,6 +77,7 @@ export default function AppNavbar({ pageDict, currentPage, setCurrentPage }) {
               {currentPage}
             </Typography>
           </Stack>
+          
           <ColorModeIconDropdown />
           <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>
             <MenuRoundedIcon />

@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 
-export default function StockCard() {4
+export default function StockCard() {
   return (
     <Card>
       <CardContent sx={{ width: "100%" }}>

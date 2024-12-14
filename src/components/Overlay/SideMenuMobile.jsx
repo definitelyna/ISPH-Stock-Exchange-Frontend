@@ -11,6 +11,7 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import MenuButton from "./MenuButton";
 import MenuContent from "./MenuContent";
 import CardAlert from "../CameWithTemplate/CardAlert";
+import UserCard from "./UserCard";
 
 function SideMenuMobile({
   open,
@@ -43,15 +44,7 @@ function SideMenuMobile({
             direction="row"
             sx={{ gap: 1, alignItems: "center", flexGrow: 1, p: 1 }}
           >
-            <Avatar
-              sizes="small"
-              alt="Riley Carter"
-              src="/static/images/avatar/7.jpg"
-              sx={{ width: 24, height: 24 }}
-            />
-            <Typography component="p" variant="h6">
-              Riley Carter
-            </Typography>
+            <UserCard />
           </Stack>
           <MenuButton showBadge>
             <NotificationsRoundedIcon />

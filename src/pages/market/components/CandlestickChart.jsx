@@ -22,7 +22,7 @@ export default function CandlestickChart({ data }) {
         spacing: 0,
       },
     },
-    dataPointWidth: 6,
+    dataPointWidth: 5,
     data: [
       {
         type: "candlestick",

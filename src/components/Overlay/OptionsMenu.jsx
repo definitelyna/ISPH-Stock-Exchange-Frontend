@@ -12,12 +12,14 @@ import MenuButton from "./MenuButton";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { logOut } from "../../firebase/AuthService";
+import { useColorScheme } from "@mui/material/styles";
 
 const MenuItem = styled(MuiMenuItem)({
   margin: "2px 0",
 });
 
 export default function OptionsMenu() {
+  const { mode, systemMode, setMode } = useColorScheme();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -34,8 +36,16 @@ export default function OptionsMenu() {
   };
 
   const handleProfileClick = () => {
-    navigate("/profile")
-  }
+    navigate("/profile");
+  };
+
+  const handleSwitchMode = () => {
+    if (mode == "dark") {
+      setMode("light");
+    } else {
+      setMode("dark");
+    }
+  };
   return (
     <>
       <MenuButton
@@ -66,8 +76,12 @@ export default function OptionsMenu() {
         }}
       >
         <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-        <Divider />
         <MenuItem onClick={handleClose}>Settings</MenuItem>
+        {mode == "dark" ? (
+          <MenuItem onClick={handleSwitchMode}>Light mode</MenuItem>
+        ) : (
+          <MenuItem onClick={handleSwitchMode}>Dark mode</MenuItem>
+        )}
         <Divider />
         <MenuItem
           onClick={handleLogOut}
