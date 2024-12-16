@@ -11,7 +11,7 @@ import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
 import MenuButton from "./MenuButton";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { logOut } from "../../firebase/AuthService";
+import { logOut } from "../../../firebase/AuthService";
 import { useColorScheme } from "@mui/material/styles";
 
 const MenuItem = styled(MuiMenuItem)({

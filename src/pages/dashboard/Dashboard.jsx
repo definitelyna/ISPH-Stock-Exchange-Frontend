@@ -8,8 +8,6 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import Overlay from "../../components/Overlay/Overlay";
-import { fetchApiData } from "../../api/apiClient";
-import { useEffect, useState } from "react";
 import HeaderStockCard from "./components/HeaderStockCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -59,15 +57,40 @@ export default function Dashboard() {
   const carouselSetting = {
     focusOnSelect: true,
     speed: 200,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
-    draggable: true,
     padding: 5,
     autoplay: true,
     autoplaySpeed: 7000,
     swipeToSlide: true,
     nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />
+    prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 1250,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 1,
+        },
+      },
+      {
+        breakpoint: 950,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const testStockData = [

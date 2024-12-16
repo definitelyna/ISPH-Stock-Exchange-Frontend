@@ -9,7 +9,7 @@ import OptionsMenu from "./OptionsMenu";
 import PropTypes from "prop-types";
 import CardMedia from "@mui/material/CardMedia";
 import UserCard from "./UserCard";
-import useThemeDetector from "../../hooks/useThemeDetector";
+import useThemeDetector from "../../../hooks/useThemeDetector";
 
 const drawerWidth = 240;
 

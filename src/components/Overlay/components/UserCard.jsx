@@ -1,5 +1,5 @@
 import { Typography, Box, Avatar, Button } from "@mui/material";
-import useAuth from "../../firebase/AuthService";
+import useAuth from "../../../firebase/AuthService";
 import { useNavigate } from "react-router-dom";
 const LoadingCard = () => {
   return (
@@ -53,9 +53,5 @@ const LoggedOutCard = () => {
 
 export default function UserCard() {
   const { user, loading } = useAuth();
-  return user ? (
-    <LoggedInCard/>
-  ) : (
-    <LoggedOutCard />
-  );
+  return user ? <LoggedInCard /> : <LoggedOutCard />;
 }

@@ -20,15 +20,23 @@ export default function HeaderStockCard({ stockData }) {
         bgcolor: backgroundColor,
         color: textColor,
         mx: 3,
-        height: "135px"
+        height: "135px",
+        width: "250px",
       }}
     >
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
         <Box
           sx={{
-            width: "100%",
-            height: "100%",
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
             justifyContent: "space-between",
           }}
         >
@@ -36,59 +44,52 @@ export default function HeaderStockCard({ stockData }) {
             sx={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            <Box
+            <CardMedia
+              component="img"
+              src={stockData.logoUrl}
               sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
+                width: 30,
+                height: 30,
+                marginRight: 1,
+                aspectRatio: "1/1",
+                borderRadius: "50%",
               }}
-            >
-              <CardMedia
-                component="img"
-                src={stockData.logoUrl}
-                sx={{
-                  width: 30,
-                  height: 30,
-                  marginRight: 1,
-                  aspectRatio: "1/1",
-                  borderRadius: "50%",
-                }}
-              />
-              <Typography sx={{ fontWeight: "bold" }}>
-                {stockData.stock_name}
-              </Typography>
-            </Box>
-            <Box>
-              <Typography>{stockData.stock_ticker}</Typography>
-            </Box>
+            />
+            <Typography sx={{ fontWeight: "bold" }}>
+              {stockData.stock_name}
+            </Typography>
           </Box>
+          <Box>
+            <Typography>{stockData.stock_ticker}</Typography>
+          </Box>
+        </Box>
 
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Typography>Current Value</Typography>
-              <Typography variant="h6">${stockData.current_value}</Typography>
-            </Box>
+            <Typography>Current Value</Typography>
+            <Typography variant="h6">${stockData.current_value}</Typography>
+          </Box>
 
-            <Box>
-              <Typography>Graph</Typography>
-            </Box>
+          <Box>
+            <Typography>Graph</Typography>
           </Box>
         </Box>
+      </Box>
     </Card>
   );
 }
