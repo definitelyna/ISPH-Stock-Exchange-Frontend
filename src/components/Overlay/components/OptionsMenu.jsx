@@ -38,14 +38,6 @@ export default function OptionsMenu() {
   const handleProfileClick = () => {
     navigate("/profile");
   };
-
-  const handleSwitchMode = () => {
-    if (mode == "dark") {
-      setMode("light");
-    } else {
-      setMode("dark");
-    }
-  };
   return (
     <>
       <MenuButton
@@ -77,11 +69,6 @@ export default function OptionsMenu() {
       >
         <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>Settings</MenuItem>
-        {mode == "dark" ? (
-          <MenuItem onClick={handleSwitchMode}>Light mode</MenuItem>
-        ) : (
-          <MenuItem onClick={handleSwitchMode}>Dark mode</MenuItem>
-        )}
         <Divider />
         <MenuItem
           onClick={handleLogOut}

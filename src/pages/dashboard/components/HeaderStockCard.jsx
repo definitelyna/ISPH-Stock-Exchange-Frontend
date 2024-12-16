@@ -19,9 +19,9 @@ export default function HeaderStockCard({ stockData }) {
       sx={{
         bgcolor: backgroundColor,
         color: textColor,
-        mx: 3,
-        height: "135px",
-        width: "250px",
+        mx: "auto",
+        height: "120px",
+        width: "220px",
       }}
     >
       <Box

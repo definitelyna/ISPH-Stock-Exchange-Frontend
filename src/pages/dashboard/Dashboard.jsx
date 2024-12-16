@@ -131,7 +131,7 @@ export default function Dashboard() {
       <Grid
         container
         spacing={2}
-        sx={{ padding: "30px", width: "100%", height: "100%" }}
+        sx={{ width: "100%", height: "100%" }}
       >
         <Grid size={12}>
           <Card sx={{ px: 6 }}>
