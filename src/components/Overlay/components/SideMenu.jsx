@@ -24,7 +24,7 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function SideMenu({ pageDict, currentPage, setCurrentPage }) {
+export default function SideMenu() {
   const { mode } = useColorScheme();
   return (
     <Drawer
@@ -59,11 +59,7 @@ export default function SideMenu({ pageDict, currentPage, setCurrentPage }) {
 
       <Divider />
 
-      <MenuContent
-        pageDict={pageDict}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      <MenuContent />
 
       <CardMedia
         component="img"

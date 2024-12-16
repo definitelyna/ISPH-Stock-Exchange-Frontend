@@ -12,6 +12,7 @@ import SideMenuMobile from "./SideMenuMobile";
 import MenuButton from "./MenuButton";
 import ColorModeIconDropdown from "../../../shared-theme/ColorModeIconDropdown";
 import PropTypes from "prop-types";
+import useCurrentPage from "../../../hooks/useCurrentPage";
 
 const Toolbar = styled(MuiToolbar)({
   width: "100%",
@@ -29,7 +30,8 @@ const Toolbar = styled(MuiToolbar)({
   },
 });
 
-export default function AppNavbar({ pageDict, currentPage, setCurrentPage }) {
+export default function AppNavbar() {
+  const { currentPage, currentPath, currentPageIcon } = useCurrentPage();
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -68,7 +70,7 @@ export default function AppNavbar({ pageDict, currentPage, setCurrentPage }) {
               alignItems: "center",
             }}
           >
-            {pageDict[currentPage].icon}
+            {currentPageIcon}
             <Typography
               variant="h4"
               component="h1"
@@ -85,9 +87,6 @@ export default function AppNavbar({ pageDict, currentPage, setCurrentPage }) {
           <SideMenuMobile
             open={open}
             toggleDrawer={toggleDrawer}
-            pageDict={pageDict}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
           />
         </Stack>
       </Toolbar>

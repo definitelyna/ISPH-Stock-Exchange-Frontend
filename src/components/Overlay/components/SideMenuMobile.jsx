@@ -13,13 +13,7 @@ import MenuContent from "./MenuContent";
 import CardAlert from "../../CameWithTemplate/CardAlert";
 import UserCard from "./UserCard";
 
-function SideMenuMobile({
-  open,
-  toggleDrawer,
-  pageDict,
-  currentPage,
-  setCurrentPage,
-}) {
+function SideMenuMobile({ open, toggleDrawer }) {
   return (
     <Drawer
       anchor="right"
@@ -52,11 +46,7 @@ function SideMenuMobile({
         </Stack>
         <Divider />
         <Stack sx={{ flexGrow: 1 }}>
-          <MenuContent
-            pageDict={pageDict}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+          <MenuContent />
           <Divider />
         </Stack>
         <CardAlert />
