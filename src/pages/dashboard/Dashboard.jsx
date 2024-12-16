@@ -59,7 +59,6 @@ export default function Dashboard() {
     speed: 200,
     slidesToShow: 4,
     slidesToScroll: 1,
-    padding: 5,
     autoplay: true,
     autoplaySpeed: 7000,
     swipeToSlide: true,
@@ -72,7 +71,6 @@ export default function Dashboard() {
           slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
-          dots: true,
         },
       },
       {
