@@ -57,7 +57,7 @@ export default function Dashboard() {
   const carouselSetting = {
     focusOnSelect: true,
     speed: 200,
-    slidesToShow: 4,
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 7000,
@@ -65,6 +65,22 @@ export default function Dashboard() {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
+      {
+        breakpoint: 2000,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 1700,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          infinite: true,
+        },
+      },
       {
         breakpoint: 1500,
         settings: {
@@ -74,7 +90,7 @@ export default function Dashboard() {
         },
       },
       {
-        breakpoint: 1250,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,

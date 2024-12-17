@@ -3,7 +3,28 @@ import PropTypes, { object } from "prop-types";
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-export default function CandlestickChart({ data }) {
+export default function CandlestickChart({ data, view, range }) {
+  let thisIntervalType, thisInterval
+  
+  switch (range) {
+    case "1D":
+      thisIntervalType = "hour"
+      thisInterval = 1
+      break
+    case "1M":
+      thisIntervalType = "week"
+      thisInterval = 1
+      break
+    case "3M":
+      thisInterval = 2
+      thisIntervalType = "week"
+      break
+    case "1Y":
+      thisInterval = 1
+      thisIntervalType = "month"
+      break
+  }
+
   const options = {
     backgroundColor: "black",
     theme: "dark1",
@@ -14,8 +35,8 @@ export default function CandlestickChart({ data }) {
       prefix: "$ ",
     },
     axisX: {
-      interval: 2,
-      intervalType: "week",
+      interval: thisInterval,
+      intervalType: thisIntervalType,
       valueFormatString: "DD-MMM-YY",
       labelAngle: 0,
       scaleBreaks: {
@@ -30,7 +51,7 @@ export default function CandlestickChart({ data }) {
         fallingColor: "red",
         color: "white",
         yValueFormatString: "$###0.00",
-        xValueFormatString: "DD/MM/YY",
+        xValueFormatString: view == "Day" ? "DD/MM/YY" : "HH:mm DD/MM/YY",
         name: "ISPH Stock Chart",
         dataPoints: data,
       },
@@ -41,4 +62,6 @@ export default function CandlestickChart({ data }) {
 
 CandlestickChart.propTypes = {
   data: PropTypes.arrayOf(object),
+  view: PropTypes.string,
+  range: PropTypes.string,
 };

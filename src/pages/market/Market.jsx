@@ -6,21 +6,22 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import Overlay from "../../components/Overlay/Overlay";
 import { fetchApiData } from "../../api/apiClient";
 import CandlestickChart from "./components/CandlestickChart";
-import { formatGraphData } from "./MarketUtils";
+import { formatGraphData } from "./utils";
 
 const apiUrl = import.meta.env.VITE_BACKEND_API;
 
 export default function Market() {
-  const [currentGraphData, setCurrentGraphData] = useState([]);
+  const [graphData, setGraphData] = useState([]);
   const [apiData, setApiData] = useState({});
   const [graphView, setGraphView] = useState("Day");
   const [graphRange, setGraphRange] = useState("1Y");
-  const [currentStock, setCurrentStock] = useState("RBH");
+  const [graphStock, setGraphStock] = useState("RBH");
 
   useEffect(() => {
     const loadData = async () => {
@@ -33,34 +34,38 @@ export default function Market() {
       setApiData(thisApiData);
       const data = formatGraphData(
         thisApiData,
-        currentStock,
+        graphStock,
         graphView,
         graphRange
       );
-      setCurrentGraphData(data);
+      setGraphData(data);
     };
 
     loadData();
   }, []);
 
-  const handleViewChange = (newView) => {
+  const handleViewChange = (e) => {
+    const newView = e.target.value;
+
     setGraphView(newView);
-    const data = formatGraphData(apiData, currentStock, newView, graphRange);
-    setCurrentGraphData(data);
+    const data = formatGraphData(apiData, graphStock, newView, graphRange);
+    setGraphData(data);
   };
 
-  const handleRangeChange = (newRange) => {
+  const handleRangeChange = (e) => {
+    const newRange = e.target.value;
+
     setGraphRange(newRange);
-    const data = formatGraphData(apiData, currentStock, graphView, newRange);
-    setCurrentGraphData(data);
+    const data = formatGraphData(apiData, graphStock, graphView, newRange);
+    setGraphData(data);
   };
 
   const handleStockChange = (event) => {
     const newStock = event.target.value;
 
-    setCurrentStock(newStock);
+    setGraphStock(newStock);
     const data = formatGraphData(apiData, newStock, graphView, graphRange);
-    setCurrentGraphData(data);
+    setGraphData(data);
   };
 
   return (
@@ -74,22 +79,26 @@ export default function Market() {
             justifyContent: "space-between",
           }}
         >
-          <Select
-            value={currentStock}
-            label="Stock"
-            onChange={handleStockChange}
-          >
+          <Select value={graphStock} label="Stock" onChange={handleStockChange}>
             {Object.keys(apiData).map((stockTicker) => (
               <MenuItem value={stockTicker} key={stockTicker}>
                 {stockTicker}
               </MenuItem>
             ))}
           </Select>
-          <Box>
+
+          <Box
+            sx={{
+              width: "26%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
             <ToggleButtonGroup
               value={graphRange}
               exclusive
-              onChange={(e, newRange) => handleRangeChange(newRange)}
+              onChange={handleRangeChange}
             >
               <ToggleButton value="1D">1D</ToggleButton>
               <ToggleButton value="1W">1W</ToggleButton>
@@ -99,10 +108,9 @@ export default function Market() {
             </ToggleButtonGroup>
 
             <ToggleButtonGroup
-              sx={{ marginLeft: 3 }}
               value={graphView}
               exclusive
-              onChange={(e, newView) => handleViewChange(newView)}
+              onChange={handleViewChange}
             >
               <ToggleButton value="Day">Day</ToggleButton>
               <ToggleButton value="Hour">Hour</ToggleButton>
@@ -110,7 +118,15 @@ export default function Market() {
           </Box>
         </Box>
         <Box sx={{ width: "100%", aspectRatio: "1/0.5", marginTop: 3 }}>
-          <CandlestickChart data={currentGraphData} />
+          {graphData.length == 0 ? (
+            <Typography>No value</Typography>
+          ) : (
+            <CandlestickChart
+              data={graphData}
+              view={graphView}
+              range={graphRange}
+            />
+          )}
         </Box>
       </Container>
     </Overlay>
