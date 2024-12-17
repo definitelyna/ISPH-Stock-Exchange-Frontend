@@ -3,6 +3,9 @@ import {
   Container,
   ToggleButton,
   ToggleButtonGroup,
+  Select,
+  MenuItem,
+  InputLabel,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import Overlay from "../../components/Overlay/Overlay";
@@ -50,7 +53,14 @@ export default function Market() {
     setGraphRange(newRange);
     const data = formatGraphData(apiData, currentStock, graphView, newRange);
     setCurrentGraphData(data);
+  };
 
+  const handleStockChange = (event) => {
+    const newStock = event.target.value;
+
+    setCurrentStock(newStock);
+    const data = formatGraphData(apiData, newStock, graphView, graphRange);
+    setCurrentGraphData(data);
   };
 
   return (
@@ -64,25 +74,40 @@ export default function Market() {
             justifyContent: "space-between",
           }}
         >
-          <ToggleButtonGroup
-            value={graphRange}
-            exclusive
-            onChange={(e, newRange) => handleRangeChange(newRange)}
+          <Select
+            value={currentStock}
+            label="Stock"
+            onChange={handleStockChange}
           >
-            <ToggleButton value="1D">1D</ToggleButton>
-            <ToggleButton value="1W">1W</ToggleButton>
-            <ToggleButton value="1M">1M</ToggleButton>
-            <ToggleButton value="3M">3M</ToggleButton>
-            <ToggleButton value="1Y">1Y</ToggleButton>
-          </ToggleButtonGroup>
-          <ToggleButtonGroup
-            value={graphView}
-            exclusive
-            onChange={(e, newView) => handleViewChange(newView)}
-          >
-            <ToggleButton value="Day">Day</ToggleButton>
-            <ToggleButton value="Hour">Hour</ToggleButton>
-          </ToggleButtonGroup>
+            {Object.keys(apiData).map((stockTicker) => (
+              <MenuItem value={stockTicker} key={stockTicker}>
+                {stockTicker}
+              </MenuItem>
+            ))}
+          </Select>
+          <Box>
+            <ToggleButtonGroup
+              value={graphRange}
+              exclusive
+              onChange={(e, newRange) => handleRangeChange(newRange)}
+            >
+              <ToggleButton value="1D">1D</ToggleButton>
+              <ToggleButton value="1W">1W</ToggleButton>
+              <ToggleButton value="1M">1M</ToggleButton>
+              <ToggleButton value="3M">3M</ToggleButton>
+              <ToggleButton value="1Y">1Y</ToggleButton>
+            </ToggleButtonGroup>
+
+            <ToggleButtonGroup
+              sx={{ marginLeft: 3 }}
+              value={graphView}
+              exclusive
+              onChange={(e, newView) => handleViewChange(newView)}
+            >
+              <ToggleButton value="Day">Day</ToggleButton>
+              <ToggleButton value="Hour">Hour</ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
         </Box>
         <Box sx={{ width: "100%", aspectRatio: "1/0.5", marginTop: 3 }}>
           <CandlestickChart data={currentGraphData} />

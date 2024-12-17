@@ -15,7 +15,7 @@ export const getFormattedDateWithHour = (dt) => {
 };
 
 export const formatGraphData = (thisApiData, stockTicker, view, range) => {
-    console.log(`View: ${view}, Range: ${range}, Stock: ${stockTicker}`)
+  console.log(`ApiData: ${thisApiData}View: ${view}, Range: ${range}, Stock: ${stockTicker}`);
   let tickerFilteredData = thisApiData[stockTicker];
 
   //Sort array of stocks object by timestamp property from oldest to lastest
@@ -30,7 +30,7 @@ export const formatGraphData = (thisApiData, stockTicker, view, range) => {
     //   ? getFormattedDate(date)
     //   : getFormattedDateWithHour(date);
 
-    return getFormattedDate(date)
+    return getFormattedDate(date);
   };
 
   sortedApiData.forEach((eachData) => {
@@ -54,7 +54,7 @@ export const formatGraphData = (thisApiData, stockTicker, view, range) => {
   });
 
   returnGraphData.forEach((thisDayData, index) => {
-    view == "day" ? thisDayData.x.setHours(0,0,0,0): null //Remove hour, min, second data from time to prevent displacement in graph
+    view == "day" ? thisDayData.x.setHours(0, 0, 0, 0) : null; //Remove hour, min, second data from time to prevent displacement in graph
 
     const prices = thisDayData.y;
     const openPrice = Number(prices[0]);
@@ -66,7 +66,6 @@ export const formatGraphData = (thisApiData, stockTicker, view, range) => {
       x: thisDayData.x,
       y: [openPrice, highPrice, lowPrice, closePrice],
     };
-
   });
 
   return returnGraphData;
