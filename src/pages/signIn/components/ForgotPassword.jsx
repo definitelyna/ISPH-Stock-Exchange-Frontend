@@ -8,6 +8,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
 function ForgotPassword({ open, handleClose }) {
+  const handleSubmit = () => {
+
+  }
+
   return (
     <Dialog
       open={open}
@@ -16,6 +20,7 @@ function ForgotPassword({ open, handleClose }) {
         component: "form",
         onSubmit: (event) => {
           event.preventDefault();
+          handleSubmit
           handleClose();
         },
         sx: { backgroundImage: "none" },
