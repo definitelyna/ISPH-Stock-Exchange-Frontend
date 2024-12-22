@@ -4,7 +4,7 @@ import { Box, Container, Typography } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import StockCard from "./components/StockCard";
 import Grid from "@mui/material/Grid2";
-import AssetDoughnutChart from "../../components/AssetDoughnut/AssetDoughnut";
+import AssetDoughnutChart from "./components/AssetDoughnut/AssetDoughnut";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

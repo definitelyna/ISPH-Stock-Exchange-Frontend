@@ -64,7 +64,6 @@ export default function ColorModeIconDropdown(props) {
         onClick={handleClose}
         slotProps={{
           paper: {
-            variant: 'outlined',
             sx: {
               my: '4px',
             },

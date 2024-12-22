@@ -70,7 +70,7 @@ export default function Market() {
 
   return (
     <Overlay>
-      <Container maxWidth="100%" sx={{ padding: 3 }}>
+      <Container maxWidth="100%" >
         <Box
           sx={{
             width: "100%",
@@ -86,10 +86,8 @@ export default function Market() {
               </MenuItem>
             ))}
           </Select>
-
           <Box
             sx={{
-              width: "26%",
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
@@ -111,6 +109,7 @@ export default function Market() {
               value={graphView}
               exclusive
               onChange={handleViewChange}
+              sx={{ marginLeft: 2, color: "blue" }}
             >
               <ToggleButton value="Day">Day</ToggleButton>
               <ToggleButton value="Hour">Hour</ToggleButton>

@@ -17,7 +17,7 @@ export default function MenuContent() {
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: "space-between" }}>
       <List dense>
         {Object.keys(pageDict).map((navigation, index) =>
-          navigation == "/" ? null : (
+          navigation == "/" || navigation == "/profile" ? null : (
             <ListItem
               key={index}
               disablePadding
