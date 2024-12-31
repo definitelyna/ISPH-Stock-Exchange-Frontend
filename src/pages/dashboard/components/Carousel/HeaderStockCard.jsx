@@ -9,7 +9,7 @@ import {
   Avatar,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import { getTextColor } from "../utils/getTextColor";
+import { getTextColor } from "../../utils/getTextColor";
 
 export default function HeaderStockCard({ stockData }) {
   const backgroundColor = stockData.color;
