@@ -5,7 +5,6 @@ import {
   ToggleButtonGroup,
   Select,
   MenuItem,
-  InputLabel,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -13,6 +12,7 @@ import Overlay from "../../components/Overlay/Overlay";
 import { fetchApiData } from "../../api/apiClient";
 import CandlestickChart from "./components/CandlestickChart";
 import { formatGraphData } from "./utils";
+import StocksTable from "./components/StocksTable";
 
 const apiUrl = import.meta.env.VITE_BACKEND_API;
 
@@ -127,6 +127,7 @@ export default function Market() {
             />
           )}
         </Box>
+        <StocksTable />
       </Container>
     </Overlay>
   );

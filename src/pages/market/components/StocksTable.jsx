@@ -1,8 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid";
-import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
-import Overlay from "../../components/Overlay/Overlay";
-import { fetchApiData } from "../../api/apiClient";
+import { fetchApiData } from "../../../api/apiClient";
 
 const apiUrl = import.meta.env.VITE_BACKEND_API;
 
@@ -12,13 +10,14 @@ const columns = [
     headerName: "Stock Ticker",
     width: 150,
     editable: false,
+    flex: 1
   },
   {
     field: "stock_name",
     headerName: "Stock Name",
     width: 150,
     editable: false,
-    visibility: false,
+    flex: 1
   },
   {
     field: "full_name",
@@ -26,6 +25,7 @@ const columns = [
     type: "string",
     width: 110,
     editable: false,
+    flex: 1
   },
   {
     field: "current_price",
@@ -33,6 +33,7 @@ const columns = [
     type: "number",
     width: 110,
     editable: false,
+    flex: 1
   },
   {
     field: "total_volume",
@@ -40,6 +41,7 @@ const columns = [
     type: "number",
     width: 110,
     editable: false,
+    flex: 1
   },
   {
     field: "volume_available",
@@ -47,10 +49,20 @@ const columns = [
     type: "number",
     width: 200,
     editable: false,
+    flex: 1
   },
 ];
 
-export default function Stocks() {
+const visibilityModel = {
+  stock_ticker: true,
+  stock_name: false,
+  full_name: true,
+  current_price: true,
+  total_volume: true,
+  volume_available: true,
+}
+
+export default function StocksTable() {
   const [stockData, setStockData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -74,23 +86,14 @@ export default function Stocks() {
   };
 
   return (
-    <Overlay>
-      <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={stockData}
           disableRowSelectionOnClick
           getRowId={(row) => row.stock_ticker}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
+          disableColumnResize={false}
+          hideFooter
+          columnVisibilityModel={visibilityModel}
         />
-      </Box>
-    </Overlay>
   );
 }

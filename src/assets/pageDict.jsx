@@ -26,10 +26,6 @@ const pageDict = {
     name: "Market",
     icon: <ShowChartIcon />,
   },
-  "/stocks": {
-    name: "Stocks",
-    icon: <ListIcon />,
-  },
   "/profile": {
     name: "Profile",
     icon: <AccountBoxIcon />,

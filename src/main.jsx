@@ -8,7 +8,6 @@ import {
   Market,
   Portfolio,
   Profile,
-  Stocks,
   Trade,
   SignIn,
 } from "./pages/pages";
@@ -38,10 +37,6 @@ const router = createBrowserRouter(
     {
       path: "/profile",
       element: <Profile />,
-    },
-    {
-      path: "/stocks",
-      element: <Stocks />,
     },
     {
       path: "/trade",
