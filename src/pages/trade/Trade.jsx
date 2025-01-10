@@ -1,5 +1,5 @@
 import Overlay from "../../components/Overlay/Overlay";
-import { Box } from "@mui/material";
+import {Box, useTheme} from "@mui/material";
 import { useState } from "react";
 import {
   TextField,
@@ -130,6 +130,7 @@ export default function Trade() {
                 padding: "10px",
                 borderRadius: "5px",
                 overflowX: "auto",
+                color: "white",
               }}
             >
               {response}
