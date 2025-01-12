@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid2";
 import { data } from "react-router-dom";
 import LeaderboardRow from "./LeaderboardRow";
 import { Leaderboard } from "@mui/icons-material";
+import PropTypes from "prop-types";
 
 const LeaderboardTestData = [
   {
@@ -19,16 +20,6 @@ const LeaderboardTestData = [
     rank: 3,
     name: "John Smith",
     asset: 250,
-  },
-  {
-    rank: 4,
-    name: "Jane Smith",
-    asset: 100,
-  },
-  {
-    rank: 5,
-    name: "John Johnson",
-    asset: 50,
   },
 ];
 
@@ -50,18 +41,18 @@ const LeaderboardHeader = () => {
   );
 };
 
-const LeaderBoardCard = () => {
+const LeaderBoardCard = ({ sx }) => {
   return (
-    <Card>
+    <Card sx={sx}>
       <CardContent
         sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
         <Typography sx={{ fontWeight: "bold" }} variant="h6">
           Leaderboard
         </Typography>
+
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1} sx={{ width: "100%", height: "100%" }}>
-
             <LeaderboardHeader />
 
             {LeaderboardTestData.map((data, index) => (
@@ -72,7 +63,6 @@ const LeaderBoardCard = () => {
             <Grid size={12}></Grid>
             <Grid size={12}></Grid>
 
-
             <LeaderboardRow {...YourTestData} />
           </Grid>
         </Box>
@@ -82,3 +72,7 @@ const LeaderBoardCard = () => {
 };
 
 export default LeaderBoardCard;
+
+LeaderBoardCard.propTypes = {
+  sx: PropTypes.object,
+};

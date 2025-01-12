@@ -19,6 +19,7 @@ const WatchlistRow = ({ logo, name, price, change }) => {
         flexDirection: "row",
         justifyContent: "space-between",
         my: 1,
+        height: 42
       }}
     >
       <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>

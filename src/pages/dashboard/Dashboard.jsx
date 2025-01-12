@@ -8,32 +8,45 @@ import StockCardCarousel from "./components/Carousel/StockCardCarousel";
 import BalanceInfoCard from "./components/BalanceInfoCard";
 import LeaderBoardCard from "./components/Leaderboard/LeaderboardCard";
 import WatchlistCard from "./components/Watchlist/WatchlistCard";
+import PortfolioAnalyticsCard from "./components/PortfolioAnalyticsCard/PortfolioAnalyticCard";
 
 const API_URL = import.meta.env.VITE_BACKEND_API;
+const SECOND_ROW_HEIGHT = 225;
 
 export default function Dashboard() {
   return (
     <Overlay>
-      <Grid container spacing={2} sx={{ width: "100%", height: "100%" }}>
-      {/* Row 1 */}
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        {/* Row 1 */}
         <Grid size={12}>
           <StockCardCarousel />
         </Grid>
 
-      {/* Row 2 */}
+        {/* Row 2 */}
         <Grid size={4}>
-          <BalanceInfoCard />
+          <BalanceInfoCard sx={{ height: SECOND_ROW_HEIGHT }} />
         </Grid>
 
         <Grid size={4} sx={{ display: "flex", justifyContent: "center" }}>
-          <LeaderBoardCard />
+          <LeaderBoardCard sx={{ height: SECOND_ROW_HEIGHT }} />
         </Grid>
 
         <Grid size={4}>
-          <WatchlistCard />
+          <WatchlistCard sx={{ height: SECOND_ROW_HEIGHT }} />
         </Grid>
 
-        
+        {/* Row 3 */}
+
+        <Grid size={8}>
+          <PortfolioAnalyticsCard />
+        </Grid>
       </Grid>
     </Overlay>
   );

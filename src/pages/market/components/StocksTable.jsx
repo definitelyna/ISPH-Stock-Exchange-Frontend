@@ -10,14 +10,14 @@ const columns = [
     headerName: "Stock Ticker",
     width: 150,
     editable: false,
-    flex: 1
+    flex: 1,
   },
   {
     field: "stock_name",
     headerName: "Stock Name",
     width: 150,
     editable: false,
-    flex: 1
+    flex: 1,
   },
   {
     field: "full_name",
@@ -25,7 +25,7 @@ const columns = [
     type: "string",
     width: 110,
     editable: false,
-    flex: 1
+    flex: 1,
   },
   {
     field: "current_price",
@@ -33,7 +33,7 @@ const columns = [
     type: "number",
     width: 110,
     editable: false,
-    flex: 1
+    flex: 1,
   },
   {
     field: "total_volume",
@@ -41,7 +41,7 @@ const columns = [
     type: "number",
     width: 110,
     editable: false,
-    flex: 1
+    flex: 1,
   },
   {
     field: "volume_available",
@@ -49,7 +49,7 @@ const columns = [
     type: "number",
     width: 200,
     editable: false,
-    flex: 1
+    flex: 1,
   },
 ];
 
@@ -60,7 +60,7 @@ const visibilityModel = {
   current_price: true,
   total_volume: true,
   volume_available: true,
-}
+};
 
 export default function StocksTable() {
   const [stockData, setStockData] = useState([]);
@@ -86,14 +86,15 @@ export default function StocksTable() {
   };
 
   return (
-        <DataGrid
-          rows={stockData}
-          disableRowSelectionOnClick
-          getRowId={(row) => row.stock_ticker}
-          columns={columns}
-          disableColumnResize={false}
-          hideFooter
-          columnVisibilityModel={visibilityModel}
-        />
+    <DataGrid
+      sx={{border: 1}}
+      rows={stockData}
+      disableRowSelectionOnClick
+      getRowId={(row) => row.stock_ticker}
+      columns={columns}
+      disableColumnResize={false}
+      hideFooter
+      columnVisibilityModel={visibilityModel}
+    />
   );
 }

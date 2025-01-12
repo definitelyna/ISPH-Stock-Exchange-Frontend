@@ -1,5 +1,6 @@
 import { Card, CardContent, Typography, Box } from "@mui/material";
 import WatchlistRow from "./WatchlistRow";
+import PropTypes from "prop-types";
 
 const WATCHLISTTESTDATA = [
   {
@@ -28,30 +29,50 @@ const WATCHLISTTESTDATA = [
   },
 ];
 
-const WatchlistCard = () => {
+const WatchlistCard = ({ sx }) => {
   return (
-    <Card>
+    <Card sx={sx}>
       <CardContent>
-        <Typography sx={{ fontWeight: "bold", mb: 1 }}>Watchlist</Typography>
-        {WATCHLISTTESTDATA.map((stock, index) => (
-          <Box key={index}>
-            {index != 0 && (
-              <Box
-                sx={{ width: "100%", height: 1.2, bgcolor: "gray", mx: "auto" }}
+        <Typography sx={{ fontWeight: "bold", mb: 0.5 }}>Watchlist</Typography>
+        <Box
+          sx={{
+            height: 165,
+            overflowY: "scroll",
+            scrollbarWidth: "none", // For Firefox
+            "&::-webkit-scrollbar": {
+              display: "none", // For Chrome, Safari, and Edge
+            },
+          }}
+        >
+          {WATCHLISTTESTDATA.map((stock, index) => (
+            <Box key={index}>
+              {index != 0 && (
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: 1.2,
+                    bgcolor: "gray",
+                    mx: "auto",
+                  }}
+                />
+              )}
+              <WatchlistRow
+                key={index}
+                logo={stock.logo}
+                name={stock.name}
+                price={stock.price}
+                change={stock.change}
               />
-            )}
-            <WatchlistRow
-              key={index}
-              logo={stock.logo}
-              name={stock.name}
-              price={stock.price}
-              change={stock.change}
-            />
-          </Box>
-        ))}
+            </Box>
+          ))}
+        </Box>
       </CardContent>
     </Card>
   );
 };
 
 export default WatchlistCard;
+
+WatchlistCard.propTypes = {
+  sx: PropTypes.object,
+}
