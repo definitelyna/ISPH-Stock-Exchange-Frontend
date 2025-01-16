@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import Overlay from "../../components/Overlay/Overlay";
 import { fetchApiData } from "../../api/apiClient";
 import CandlestickChart from "./components/CandlestickChart";
-import { formatGraphData } from "./utils";
+import { formatGraphData } from "./utils/formatGraphData";
 import StocksTable from "./components/StocksTable";
 
 const apiUrl = import.meta.env.VITE_BACKEND_API;

@@ -1,7 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { fetchApiData } from "../../../api/apiClient";
-import { useWebSocketData } from "../utils";
+import useSocket from "../utils/useSocket";
 
 const apiUrl = import.meta.env.VITE_BACKEND_API;
 const SOCKET_URL = import.meta.env.VITE_BACKEND_WS;
@@ -75,8 +75,8 @@ export default function StocksTable() {
     fetchData();
   }, []);
 
-  // const { latestData, connectionStatus } = useWebSocketData(SOCKET_URL);
-  // console.log(JSON.stringify(latestData, null, 2), connectionStatus) DOES NOT WORK
+  const [data, sendData] = useSocket(SOCKET_URL, "stocks");
+  console.log(data)
 
   const transformData = (apiData) => {
     let dataArr = [];
