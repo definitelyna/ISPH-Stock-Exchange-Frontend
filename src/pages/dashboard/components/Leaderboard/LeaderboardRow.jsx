@@ -21,7 +21,7 @@ import { getTextColor } from "../../utils/getTextColor";
     return returnValue;
   };
 
-const LeaderboardRow = ({ rank, name, asset }) => {
+const LeaderboardRow = ({ rank, name, asset, sx }) => {
   const { mode } = useColorScheme();
 
   const getBoxStyle = (rank) => {
@@ -37,17 +37,17 @@ const LeaderboardRow = ({ rank, name, asset }) => {
   };
   return (
     <>
-      <Grid size={2} sx={{ display: "flex", justifyContent: "center" }}>
+      <Grid size={2} sx={{ display: "flex", justifyContent: "center", ...sx }}>
         <Box sx={getBoxStyle(rank)}>
           <Typography fontWeight="bold">{rank}</Typography>
         </Box>
       </Grid>
-      <Grid size={6} sx={{ display: "flex", justifyContent: "center" }}>
+      <Grid size={6} sx={{ display: "flex", justifyContent: "center", ...sx }}>
         <Box sx={getBoxStyle(rank)}>
           <Typography fontWeight="bold">{name}</Typography>
         </Box>
       </Grid>
-      <Grid size={4} sx={{ display: "flex", justifyContent: "center" }}>
+      <Grid size={4} sx={{ display: "flex", justifyContent: "center", ...sx }}>
         <Box sx={getBoxStyle(rank)}>
           <Typography fontWeight="bold">{asset}</Typography>
         </Box>
@@ -62,4 +62,5 @@ LeaderboardRow.propTypes = {
   rank: PropTypes.number,
   name: PropTypes.string,
   asset: PropTypes.number,
+  sx: PropTypes.object,
 };

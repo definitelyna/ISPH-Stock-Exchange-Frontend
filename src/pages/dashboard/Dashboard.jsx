@@ -9,9 +9,11 @@ import BalanceInfoCard from "./components/BalanceInfoCard";
 import LeaderBoardCard from "./components/Leaderboard/LeaderboardCard";
 import WatchlistCard from "./components/Watchlist/WatchlistCard";
 import PortfolioAnalyticsCard from "./components/PortfolioAnalyticsCard/PortfolioAnalyticCard";
+import { Watch } from "@mui/icons-material";
+import NewsCard from "./components/News/NewsCard";
 
 const API_URL = import.meta.env.VITE_BACKEND_API;
-const SECOND_ROW_HEIGHT = 225;
+const SECOND_ROW_HEIGHT = 275;
 
 export default function Dashboard() {
   return (
@@ -39,13 +41,17 @@ export default function Dashboard() {
         </Grid>
 
         <Grid size={4}>
-          <WatchlistCard sx={{ height: SECOND_ROW_HEIGHT }} />
+          <NewsCard sx={{ height: SECOND_ROW_HEIGHT, overflowY: "scroll", scrollbarWidth: "none" }} />
         </Grid>
 
         {/* Row 3 */}
 
         <Grid size={8}>
           <PortfolioAnalyticsCard />
+        </Grid>
+
+        <Grid size={4}>
+          <WatchlistCard sx={{height: "100%"}}/>
         </Grid>
       </Grid>
     </Overlay>

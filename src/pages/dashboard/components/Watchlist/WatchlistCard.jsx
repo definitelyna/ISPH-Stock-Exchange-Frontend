@@ -33,15 +33,13 @@ const WatchlistCard = ({ sx }) => {
   return (
     <Card sx={sx}>
       <CardContent>
-        <Typography sx={{ fontWeight: "bold", mb: 0.5 }}>Watchlist</Typography>
+        <Typography sx={{ fontWeight: "bold", mb: 1 }} variant="h6">Watchlist</Typography>
         <Box
           sx={{
-            height: 165,
+            display: "flex",
+            flexDirection: "column",
             overflowY: "scroll",
-            scrollbarWidth: "none", // For Firefox
-            "&::-webkit-scrollbar": {
-              display: "none", // For Chrome, Safari, and Edge
-            },
+            scrollbarWidth: "none",
           }}
         >
           {WATCHLISTTESTDATA.map((stock, index) => (
@@ -75,4 +73,4 @@ export default WatchlistCard;
 
 WatchlistCard.propTypes = {
   sx: PropTypes.object,
-}
+};

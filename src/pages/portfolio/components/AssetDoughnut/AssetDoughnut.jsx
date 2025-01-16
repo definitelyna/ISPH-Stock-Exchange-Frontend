@@ -8,7 +8,10 @@ import useDoughnutChart from "./utils";
 const getTextColor = (mode) => (mode === "light" ? "black" : "white");
 
 export default function AssetDoughnutChart() {
-  const { doughnutData, asset, loading } = useDoughnutChart();
+  const { doughnutData, asset, loading } = useDoughnutChart({
+    datasets: [],
+    labels: [],
+  });
   const { mode } = useColorScheme();
   const [chartKey, setChartKey] = useState(0); // Track chart re-renders
 
@@ -68,6 +71,8 @@ export default function AssetDoughnutChart() {
     }),
     []
   );
+
+  console.log(doughnutData);
 
   return (
     <>

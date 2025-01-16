@@ -9,7 +9,6 @@ const BalanceInfoCard = ({ sx }) => {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-around",
         }}
       >
         <Box
@@ -57,8 +56,8 @@ const BalanceInfoCard = ({ sx }) => {
           </Box>
         </Box>
 
-        <Box>
-          <Typography variant="" sx={{ fontWeight: "bold", marginTop: 2 }}>
+        <Box sx={{ width: "100%", mt: 2 }}>
+          <Typography variant="" sx={{ fontWeight: "bold" }}>
             Total value
           </Typography>
 

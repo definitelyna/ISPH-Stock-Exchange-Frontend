@@ -1,3 +1,6 @@
+import useWebSocket, { ReadyState } from "react-use-websocket";
+import { useEffect, useState } from "react";
+
 const getFormattedDate = (dt) => {
   return dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate();
 };
@@ -30,24 +33,22 @@ export const formatGraphData = (thisApiData, stockTicker, view, range) => {
   switch (range) {
     case "1D":
       daysAgoOfRange = 1;
-      break
+      break;
     case "1W":
       daysAgoOfRange = 7;
-      break
+      break;
     case "1M":
       daysAgoOfRange = 30;
-      break
+      break;
     case "3M":
       daysAgoOfRange = 60;
-      break
+      break;
     case "1Y":
       daysAgoOfRange = 365;
-      break
+      break;
   }
-  console.log(daysAgoOfRange)
 
-  console.log(`View: ${view}, Range: ${range}, Stock: ${stockTicker}`);
-  let tickerFilteredData = thisApiData[stockTicker];
+    let tickerFilteredData = thisApiData[stockTicker];
 
   //Sort array of stocks object by timestamp property from oldest to lastest
   let sortedApiData = tickerFilteredData.sort(function (a, b) {
@@ -101,4 +102,49 @@ export const formatGraphData = (thisApiData, stockTicker, view, range) => {
   });
 
   return returnGraphData;
+};
+
+/**
+ * Custom hook to handle WebSocket connection and return the latest data.
+ * @param {string} socketUrl - The WebSocket server URL.
+ * @param {object} options - Options for the WebSocket connection (e.g., auto-reconnect).
+ * @returns {object} - An object containing the latest data, connection status, and sendMessage function.
+ */
+export const useWebSocketData = (socketUrl, options = {}) => {
+  const [latestData, setLatestData] = useState(null);
+
+  const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl, {
+    onOpen: () => console.log("WebSocket connected"),
+    onClose: () => console.log("WebSocket disconnected"),
+    onError: (error) => console.error("WebSocket error:", error),
+    shouldReconnect: () => true, // Automatically reconnect by default
+    ...options,
+  });
+
+  // Update the latest data whenever a new message is received
+  useEffect(() => {
+    if (lastMessage !== null) {
+      try {
+        // Parse JSON if the server sends structured data
+        const parsedData = JSON.parse(lastMessage.data);
+        setLatestData(parsedData);
+      } catch {
+        // If not JSON, just use raw data
+        setLatestData(lastMessage.data);
+      }
+    }
+  }, [lastMessage]);
+
+  // Return the latest data and utility methods
+  return {
+    latestData,
+    connectionStatus: {
+      [ReadyState.CONNECTING]: "Connecting",
+      [ReadyState.OPEN]: "Open",
+      [ReadyState.CLOSING]: "Closing",
+      [ReadyState.CLOSED]: "Closed",
+      [ReadyState.UNINSTANTIATED]: "Uninstantiated",
+    }[readyState],
+    sendMessage,
+  };
 };

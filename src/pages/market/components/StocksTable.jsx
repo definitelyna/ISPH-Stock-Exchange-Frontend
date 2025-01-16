@@ -1,8 +1,10 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { fetchApiData } from "../../../api/apiClient";
+import { useWebSocketData } from "../utils";
 
 const apiUrl = import.meta.env.VITE_BACKEND_API;
+const SOCKET_URL = import.meta.env.VITE_BACKEND_WS;
 
 const columns = [
   {
@@ -69,11 +71,12 @@ export default function StocksTable() {
       const data = await fetchApiData(apiUrl, "GET", "/stocks");
       const transformedData = transformData(data);
       setStockData(transformedData);
-
-      console.log(transformedData);
     };
     fetchData();
   }, []);
+
+  // const { latestData, connectionStatus } = useWebSocketData(SOCKET_URL);
+  // console.log(JSON.stringify(latestData, null, 2), connectionStatus) DOES NOT WORK
 
   const transformData = (apiData) => {
     let dataArr = [];
@@ -87,7 +90,7 @@ export default function StocksTable() {
 
   return (
     <DataGrid
-      sx={{border: 1}}
+      sx={{ border: 1 }}
       rows={stockData}
       disableRowSelectionOnClick
       getRowId={(row) => row.stock_ticker}
